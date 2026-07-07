@@ -1,0 +1,24 @@
+import { z } from 'zod'
+
+export const orderItemSchema = z.object({
+  id: z.uuid(),
+  order_id: z.uuid(),
+  gift_id: z.uuid().nullable(),
+  name: z.string().min(1),
+  image: z.url().nullable(),
+  quantity: z.number().int().positive(),
+  price: z.number().int().positive(),
+  total: z.number().int().positive(),
+  created_at: z.string().optional(),
+  updated_at: z.string().optional()
+})
+
+export const createOrderItemSchema = orderItemSchema.omit({
+  id: true,
+  total: true,
+  created_at: true,
+  updated_at: true
+})
+
+export type OrderItem = z.infer<typeof orderItemSchema>
+export type CreateOrderItemInput = z.infer<typeof createOrderItemSchema>
