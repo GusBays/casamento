@@ -23,9 +23,8 @@ export class OrderService extends BaseService<OrderRecord, Order> {
     const parsed = createOrderWithItemsSchema.parse(input)
     const total = parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const order = await this.repository.create({
-      guest_email: parsed.guest_email,
-      guest_name: parsed.guest_name,
-      guest_message: parsed.guest_message,
+      guest_id: parsed.guest_id,
+      order_note: parsed.order_note,
       status: parsed.status,
       total
     })

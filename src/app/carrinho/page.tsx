@@ -10,7 +10,7 @@ export default function CurrentCartPage() {
           <p className="text-sm font-medium tracking-[0.24em] text-rose-700 uppercase">
             Carrinho
           </p>
-          <h1 className="text-4xl font-semibold tracking-tight">Seus presentes escolhidos.</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Seus presentes escolhidos.</h1>
         </section>
         <CartPage />
       </main>

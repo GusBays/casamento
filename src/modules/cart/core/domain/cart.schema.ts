@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const cartSchema = z.object({
   id: z.uuid(),
   token: z.string().min(1),
-  guest_email: z.email().nullable(),
+  guest_id: z.uuid().nullable(),
   status: z.enum(['active', 'converted', 'abandoned']),
   total: z.number().int().min(0),
   created_at: z.string().optional(),
@@ -15,7 +15,7 @@ export const cartItemSchema = z.object({
   cart_id: z.uuid(),
   gift_id: z.uuid().nullable(),
   name: z.string().min(1),
-  image: z.url().nullable(),
+  image: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),
   price: z.number().int().positive(),
   total: z.number().int().positive(),

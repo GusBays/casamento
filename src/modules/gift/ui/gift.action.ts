@@ -8,26 +8,26 @@ function service(): GiftService {
   return giftService
 }
 
-export function createGift(input: CreateGiftInput) {
+export async function createGift(input: CreateGiftInput) {
   return service().create(input)
 }
 
-export function updateGift(id: string, input: UpdateGiftInput) {
+export async function updateGift(id: string, input: UpdateGiftInput) {
   return service().update(id, input)
 }
 
-export function getOneGift(id: string) {
+export async function getOneGift(id: string) {
   return service().getOne(id)
 }
 
-export function getAllGifts() {
+export async function getAllGifts() {
   return service().getAll()
 }
 
-export function getPaginateGifts(params?: PaginationParams) {
+export async function getPaginateGifts(params?: PaginationParams) {
   return service().getPaginate(params)
 }
 
-export function deleteGift(id: string) {
+export async function deleteGift(id: string) {
   return service().delete(id)
 }

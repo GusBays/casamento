@@ -5,7 +5,7 @@ export const orderItemSchema = z.object({
   order_id: z.uuid(),
   gift_id: z.uuid().nullable(),
   name: z.string().min(1),
-  image: z.url().nullable(),
+  image: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),
   price: z.number().int().positive(),
   total: z.number().int().positive(),
@@ -15,6 +15,7 @@ export const orderItemSchema = z.object({
 
 export const createOrderItemSchema = orderItemSchema.omit({
   id: true,
+  order_id: true,
   total: true,
   created_at: true,
   updated_at: true

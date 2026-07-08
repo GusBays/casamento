@@ -4,9 +4,8 @@ import { createOrderPaymentSchema, orderPaymentSchema } from './order-payment.sc
 
 export const orderSchema = z.object({
   id: z.uuid(),
-  guest_email: z.email(),
-  guest_name: z.string().nullable(),
-  guest_message: z.string().nullable(),
+  guest_id: z.uuid(),
+  order_note: z.string().nullable(),
   status: z.enum(['pending', 'paid', 'expired', 'cancelled']),
   total: z.number().int().positive(),
   created_at: z.string().optional(),

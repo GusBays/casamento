@@ -49,26 +49,26 @@
 }
 
 :root {
-  --background: oklch(0.995 0.005 78);
-  --foreground: oklch(0.18 0.025 28);
+  --background: #fbfaf5;
+  --foreground: #161616;
   --font-body: Arial, Helvetica, sans-serif;
   --font-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.48 0.17 24);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.95 0.035 72);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.96 0.015 78);
-  --muted-foreground: oklch(0.48 0.03 34);
-  --accent: oklch(0.94 0.045 355);
-  --accent-foreground: oklch(0.205 0 0);
+  --card: #fbfaf5;
+  --card-foreground: #161616;
+  --popover: #fbfaf5;
+  --popover-foreground: #161616;
+  --primary: #3f4d2f;
+  --primary-foreground: #fbfaf5;
+  --secondary: #eef0e3;
+  --secondary-foreground: #28351f;
+  --muted: #f4f1e9;
+  --muted-foreground: #5e604f;
+  --accent: #eef0e3;
+  --accent-foreground: #28351f;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.62 0.14 24);
+  --border: #c9c9b3;
+  --input: #c9c9b3;
+  --ring: #606d42;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -129,5 +129,192 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .ornate-page {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(#fbfaf5, #fbfaf5) padding-box,
+      repeating-linear-gradient(
+          90deg,
+          transparent 0 2.25rem,
+          rgba(154, 160, 123, 0.85) 2.25rem 2.35rem,
+          transparent 2.35rem 4.8rem
+        )
+        border-box;
+    border: clamp(14px, 2vw, 26px) solid transparent;
+    box-shadow: inset 0 0 0 1px rgba(154, 160, 123, 0.45);
+  }
+
+  .ornate-page::before,
+  .ornate-page::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: clamp(18px, 2.4vw, 34px);
+    border: 2px solid rgba(154, 160, 123, 0.7);
+    border-radius: 42% 58% 46% 54% / 2% 2% 98% 98%;
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0 9%,
+      transparent 9% 17%,
+      #000 17% 33%,
+      transparent 33% 41%,
+      #000 41% 59%,
+      transparent 59% 67%,
+      #000 67% 83%,
+      transparent 83% 91%,
+      #000 91% 100%
+    );
+  }
+
+  .ornate-page::after {
+    inset: clamp(25px, 3vw, 44px);
+    border-width: 1px;
+    opacity: 0.55;
+    transform: scaleX(0.985);
+  }
+
+  .wedding-kicker {
+    color: #606d42;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .wedding-pill {
+    display: inline-flex;
+    min-height: clamp(3.25rem, 6vw, 5rem);
+    width: min(100%, 40rem);
+    align-items: center;
+    justify-content: center;
+    border: clamp(4px, 0.55vw, 7px) solid #1e1e1c;
+    border-radius: 999px;
+    padding: 0.35rem clamp(1rem, 3vw, 3rem);
+    color: #161616;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.75rem, 3.8vw, 3.2rem);
+    line-height: 1;
+    text-align: center;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .wedding-pill:hover {
+    border-color: #3f4d2f;
+    background: #eef0e3;
+    color: #28351f;
+  }
+
+  .gift-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.1rem, 7.2vw, 5.8rem);
+    line-height: 0.78;
+  }
+
+  .dress-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.5rem, 5.4vw, 4.3rem);
+    line-height: 0.82;
+  }
+
+  .dress-title span,
+  .gift-title span,
+  .script-heading {
+    font-family: "Snell Roundhand", "Brush Script MT", cursive;
+    font-weight: 700;
+  }
+
+  .script-heading {
+    font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+    line-height: 0.8;
+  }
+
+  .dress-hover-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(circle at var(--dress-spot-x, 50%) 58%, transparent 0 15rem, rgba(13, 15, 11, 0.38) 28rem),
+      rgba(13, 15, 11, 0.18);
+    opacity: 0;
+    transition:
+      opacity 220ms ease,
+      background 220ms ease;
+  }
+
+  .dress-copy,
+  .dress-person {
+    position: relative;
+    transition:
+      opacity 220ms ease,
+      filter 220ms ease,
+      transform 220ms ease;
+  }
+
+  .dress-person {
+    border-radius: 999px;
+    outline: none;
+    transform-origin: bottom center;
+  }
+
+  .dress-person img {
+    filter: drop-shadow(0 18px 20px rgba(38, 41, 29, 0.14));
+    transition:
+      filter 220ms ease,
+      transform 220ms ease;
+  }
+
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) {
+    --dress-spot-x: 42%;
+  }
+
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) {
+    --dress-spot-x: 58%;
+  }
+
+  .dress-section:has(.dress-person:is(:hover, :focus-visible)) .dress-hover-overlay {
+    opacity: 1;
+  }
+
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy,
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ela,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ele {
+    opacity: 0.58;
+    filter: saturate(0.9);
+  }
+
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy--ele,
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ele,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy--ela,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ela {
+    opacity: 1;
+    filter: none;
+    transform: translateY(-0.25rem) scale(1.025);
+  }
+
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy--ele,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy--ela {
+    color: #fbfaf5;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ele img,
+  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ela img {
+    filter:
+      drop-shadow(0 22px 28px rgba(0, 0, 0, 0.26))
+      drop-shadow(0 0 12px rgba(251, 250, 245, 0.28));
+  }
+
+  .dress-person:focus-visible {
+    box-shadow: 0 0 0 4px rgba(96, 109, 66, 0.3);
   }
 }

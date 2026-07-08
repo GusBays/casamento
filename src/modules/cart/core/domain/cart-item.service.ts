@@ -25,4 +25,8 @@ export class CartItemService extends BaseService<CartItem> {
   getByCartAndGift(cartId: string, giftId: string | null, name?: string) {
     return (this.repository as CartItemRepositorySupabase).getByCartAndGift(cartId, giftId, name)
   }
+
+  deleteFromCart(cartId: string, itemId: string) {
+    return (this.repository as CartItemRepositorySupabase).deleteFromCart(cartId, itemId)
+  }
 }

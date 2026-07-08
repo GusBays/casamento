@@ -20,7 +20,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     const total = parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const cart = await this.repository.create({
       token: parsed.token,
-      guest_email: parsed.guest_email,
+      guest_id: parsed.guest_id,
       status: parsed.status,
       total
     })
@@ -66,7 +66,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     const total = items.reduce((sum, item) => sum + item.total, 0)
 
     await this.update(existingCart.id, {
-      guest_email: input.guest_email,
+      guest_id: input.guest_id,
       status: input.status,
       total
     })
@@ -80,6 +80,17 @@ export class CartService extends BaseService<CartRecord, Cart> {
 
   getItems(cartId: string) {
     return this.cartItemService.getByCartId(cartId)
+  }
+
+  async removeItem(cartId: string, itemId: string) {
+    await this.cartItemService.deleteFromCart(cartId, itemId)
+
+    const items = await this.getItems(cartId)
+    const total = items.reduce((sum, item) => sum + item.total, 0)
+
+    await this.update(cartId, { total })
+
+    return this.getOne(cartId)
   }
 }
 

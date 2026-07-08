@@ -12,7 +12,7 @@
 ## Routes
 
 - `/`: public wedding home for Gustavo and Ana, with full-page sections and scroll-friendly layout.
-- `/presentes`: gift list. Reads available gifts from Supabase when configured; uses local seed data during early development.
+- `/presentes`: redirects to the home gift section. Gifts are read from Supabase.
 - `/checkout`: confirms selected items, collects email, and displays Pix QR Code.
 
 ## Backend
@@ -30,9 +30,7 @@ Do not expose service-role keys to the browser. Browser code may only use `NEXT_
 
 - `src/app`: routes and route-level composition.
 - `src/common/components`: reusable app components.
-- `src/common/data`: temporary seed data and typed mocks.
 - `src/lib`: shared utilities, shadcn helpers, and Supabase clients.
-- `src/common/types`: shared TypeScript contracts.
 - `docs`: engineering, AI, and domain reference.
 
 ## Data Flow
@@ -45,6 +43,6 @@ Do not expose service-role keys to the browser. Browser code may only use `NEXT_
 6. Checkout shows QR Code and copy/paste Pix payload.
 7. Payment provider webhook updates order/payment status.
 
-## First Implementation Principle
+## Data Principle
 
-Build with local data first, then replace reads/writes with Supabase functions. Keep UI and domain contracts stable while the database evolves.
+Use Supabase as the source of truth for gifts, carts, guests, orders, and payments. UI-only state should not duplicate checkout domain state.

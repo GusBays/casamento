@@ -12,6 +12,24 @@ create table gifts (
   image text,
   quotes integer not null default 1 check (quotes > 0),
   remaining integer not null default 1 check (remaining >= 0),
+  status text not null default 'available' check (status in ('available', 'reserved', 'purchased')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+```
+
+Guests can mark a gift as purchased manually by setting `status = 'purchased'`
+and, when applicable, `remaining = 0`. The checkout does not automatically
+reserve or purchase gifts.
+
+### guests
+
+```sql
+create table guests (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null unique,
+  phone text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -23,11 +41,12 @@ create table gifts (
 create table carts (
   id uuid primary key default gen_random_uuid(),
   token text not null unique,
-  guest_email text,
+  guest_id uuid,
   status text not null default 'active' check (status in ('active', 'converted', 'abandoned')),
   total integer not null default 0 check (total >= 0),
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  constraint carts_guest_id_fkey foreign key (guest_id) references guests(id) on delete set null
 );
 ```
 
@@ -55,13 +74,13 @@ create table cart_items (
 ```sql
 create table orders (
   id uuid primary key default gen_random_uuid(),
-  guest_email text not null,
-  guest_name text,
-  guest_message text,
+  guest_id uuid not null,
+  order_note text,
   status text not null default 'pending' check (status in ('pending', 'paid', 'expired', 'cancelled')),
   total integer not null check (total > 0),
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  constraint orders_guest_id_fkey foreign key (guest_id) references guests(id) on delete restrict
 );
 ```
 
@@ -109,11 +128,12 @@ create table order_payments (
 
 - `src/modules/gift`: gift catalog.
 - `src/modules/cart`: cart and cart items before checkout.
+- `src/modules/guest`: guest identity used by checkout orders.
 - `src/modules/order`: confirmed orders and order items.
 - `src/modules/order/core/domain/order-payment.*`: order payment submodule used by the order backend.
 
 ## RLS Direction
 
 - `gifts`: public read for catalog fields.
-- `carts`, `cart_items`, `orders`, `order_items`, `order_payments`: no direct public writes. Use server actions or route handlers.
+- `guests`, `carts`, `cart_items`, `orders`, `order_items`, `order_payments`: no direct public writes. Use server actions or route handlers.
 - Service-role access only on the server when privileged operations are required.

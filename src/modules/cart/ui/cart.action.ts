@@ -1,7 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 import type { PaginationParams } from '@/lib/supabase/supabase.repository'
 import type { CreateCartInput, UpdateCartInput } from '@/modules/cart/core/domain/cart.schema'
@@ -9,6 +9,7 @@ import { cartService, type CartService } from '@/modules/cart/core/domain/cart.s
 
 const CART_TOKEN_COOKIE = 'cart_token'
 const CART_TOKEN_MAX_AGE = 60 * 60 * 24 * 30
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 function service(): CartService {
   return cartService
@@ -43,14 +44,15 @@ export async function addGiftToCart(formData: FormData) {
   const giftId = String(formData.get('giftId') ?? '')
   const name = String(formData.get('name') ?? '')
   const price = Number(formData.get('price') ?? 0)
+  const image = String(formData.get('image') ?? '') || null
 
   await createCart({
-    guest_email: null,
+    guest_id: null,
     status: 'active',
     items: [
       {
-        gift_id: null,
-        image: null,
+        gift_id: UUID_PATTERN.test(giftId) ? giftId : null,
+        image,
         name,
         price,
         quantity: 1
@@ -58,7 +60,21 @@ export async function addGiftToCart(formData: FormData) {
     ]
   })
 
-  redirect(giftId ? `/checkout?gift=${giftId}` : '/checkout')
+  revalidatePath('/')
+  revalidatePath('/checkout')
+}
+
+export async function removeCartItem(formData: FormData) {
+  const token = await getCartToken()
+  const itemId = String(formData.get('itemId') ?? '')
+  const cart = token ? await service().getByToken(token) : null
+
+  if (!cart || !itemId) return
+
+  await service().removeItem(cart.id, itemId)
+
+  revalidatePath('/')
+  revalidatePath('/checkout')
 }
 
 export async function updateCart(id: string, input: UpdateCartInput) {
@@ -80,7 +96,15 @@ export async function getCurrentCart() {
 
   if (!token) return null
 
-  return service().getByToken(token)
+  const cart = await service().getByToken(token)
+
+  if (cart?.status !== 'active') return null
+
+  return cart
+}
+
+export async function clearCurrentCartCookie() {
+  ;(await cookies()).delete(CART_TOKEN_COOKIE)
 }
 
 export async function getAllCarts() {

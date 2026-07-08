@@ -16,10 +16,10 @@ export function RsvpPage() {
             </div>
 
             <div className="space-y-5">
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+              <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance sm:text-5xl">
                 Confirme sua presenca.
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
+              <p className="max-w-2xl text-base leading-7 text-muted-foreground">
                 Conta pra gente seu nome e quem vai junto. So isso, sem burocracia.
               </p>
             </div>

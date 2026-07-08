@@ -19,15 +19,7 @@ Local `.env.local` and Vercel project variables:
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-PIX_PROVIDER=
-PIX_KEY=
-PIX_MERCHANT_NAME=
-PIX_MERCHANT_CITY=
-NEXT_PUBLIC_SITE_URL=
 ```
-
-Only add `SUPABASE_SERVICE_ROLE_KEY` when server-only code needs privileged operations.
 
 ## Deploy Checklist
 

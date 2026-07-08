@@ -29,4 +29,17 @@ export class CartItemRepositorySupabase extends SupabaseRepository<CartItem> {
 
     return data
   }
+
+  async deleteFromCart(cartId: string, itemId: string) {
+    const supabase = await this.client()
+    const { error } = await supabase
+      .from(this.TABLE)
+      .delete()
+      .eq('cart_id', cartId)
+      .eq('id', itemId)
+
+    if (error) throw error
+
+    return { id: itemId }
+  }
 }
