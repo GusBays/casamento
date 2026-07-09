@@ -1,45 +1,39 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import { SiteHeader } from "@/common/components/site-header";
-import { GiftCard } from "@/modules/gift/ui/components/gift-card";
+import { FloatingCart } from "@/common/components/floating-cart";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { GiftList } from "@/modules/gift/ui/components/gift-list";
 import { getPaginateGifts } from "@/modules/gift/ui/gift.action";
+import { RsvpForm } from "@/modules/rsvp/ui/components/rsvp-form";
 
 export default async function Home() {
   const gifts = await getPaginateGifts({ page: 1, perPage: 8 });
 
   return (
     <>
-      <SiteHeader />
-      <main className="snap-y snap-mandatory overflow-x-hidden bg-[#fbfaf5] text-[#161616]">
+      <FloatingCart />
+      <main className="h-svh snap-y snap-mandatory overflow-x-hidden overflow-y-auto bg-[#fbfaf5] text-[#161616]">
         <section
           id="inicio"
-          className="relative grid h-svh snap-start place-items-center overflow-hidden bg-[#ece8dc] pt-16"
+          className="relative grid h-svh snap-start place-items-center overflow-hidden bg-[#ece8dc]"
         >
-          <picture className="absolute inset-0 flex items-center justify-center">
+          <picture className="absolute inset-0">
             <source media="(max-width: 640px)" srcSet="/banner-mobile.png" />
             <source media="(max-width: 1024px)" srcSet="/banner-tablet.png" />
             <img
-              src="/banner-desktop.png"
-              srcSet="/banner-mobile.png 426w, /banner-tablet.png 600w, /banner-desktop.png 800w"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 52vw"
+              src="/banner-desktop-wide.png"
+              srcSet="/banner-mobile.png 426w, /banner-tablet.png 600w, /banner-desktop-wide.png 1672w"
+              sizes="100vw"
               alt="Ana Julia e Gustavo convidam você para esse dia especial"
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover"
             />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#151712]/20 via-transparent to-[#151712]/10" />
-          <div className="relative z-10 flex min-h-[calc(100svh-4rem)] w-full items-end justify-center px-6 pb-12 text-center">
-            <div className="space-y-5 text-[#fbfaf5] drop-shadow-lg">
-              <Image
-                src="/logo.png"
-                alt="Logo Gustavo e Ana"
-                width={180}
-                height={180}
-                className="mx-auto size-32 object-contain md:size-44"
-              />
-              <h1 className="font-serif text-4xl leading-none md:text-6xl">Gustavo & Ana</h1>
-            </div>
-          </div>
         </section>
 
         <section id="convite" className="ornate-page h-svh snap-start px-5 py-16">
@@ -89,9 +83,20 @@ export default async function Home() {
               className="size-36 object-contain md:size-48"
             />
             <p className="font-serif text-3xl md:text-5xl">Clique no botão</p>
-            <Link className="wedding-pill" href="/confirmar-presenca">
-              confirme sua presença
-            </Link>
+            <Dialog>
+              <DialogTrigger render={<button className="wedding-pill" type="button" />}>
+                confirme sua presença
+              </DialogTrigger>
+              <DialogContent className="max-h-[calc(100svh-2rem)] overflow-y-auto border-[#9aa07b]/50 bg-[#fbfaf5] p-6 sm:max-w-lg">
+                <DialogTitle className="font-serif text-3xl text-[#161616]">
+                  Confirmar presença
+                </DialogTitle>
+                <DialogDescription className="font-serif text-base leading-relaxed text-[#5e604f]">
+                  Conta pra gente seu nome e quem vai junto.
+                </DialogDescription>
+                <RsvpForm variant="plain" />
+              </DialogContent>
+            </Dialog>
             <p className="text-xl font-semibold md:text-2xl">confirmação até dia 19/09</p>
             <a className="wedding-pill" href="#vestimenta">
               informações de vestimenta
@@ -189,11 +194,12 @@ export default async function Home() {
               </ol>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {gifts.data.map((gift) => (
-                <GiftCard gift={gift} key={gift.id} />
-              ))}
-            </div>
+            <GiftList
+              gifts={gifts.data}
+              initialHasNextPage={gifts.pageInfo.hasNextPage}
+              initialPage={gifts.pageInfo.page}
+              perPage={gifts.pageInfo.perPage}
+            />
           </div>
         </section>
       </main>

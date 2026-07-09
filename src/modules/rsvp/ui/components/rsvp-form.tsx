@@ -1,7 +1,8 @@
 'use client'
 
 import { Check, Send } from 'lucide-react'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { toast } from 'sonner'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -14,15 +15,24 @@ const initialState: RsvpFormState = {
   status: 'idle'
 }
 
-export function RsvpForm() {
+type RsvpFormProps = {
+  variant?: 'card' | 'plain'
+}
+
+export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
   const [state, formAction, isPending] = useActionState(confirmRsvp, initialState)
 
-  return (
-    <Card className="rounded-lg shadow-sm">
-      <CardHeader>
-        <CardTitle>Confirmar presenca</CardTitle>
-      </CardHeader>
-      <CardContent>
+  useEffect(() => {
+    if (state.status === 'success') {
+      toast.success('Presença confirmada. Obrigado!')
+    }
+
+    if (state.status === 'error') {
+      toast.error(state.message ?? 'Não foi possível confirmar presença.')
+    }
+  }, [state.message, state.status])
+
+  const form = (
         <form action={formAction} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="guestName">Seu nome</Label>
@@ -69,6 +79,17 @@ export function RsvpForm() {
             {isPending ? 'Confirmando...' : 'Confirmar'}
           </Button>
         </form>
+  )
+
+  if (variant === 'plain') return form
+
+  return (
+    <Card className="rounded-lg shadow-sm">
+      <CardHeader>
+        <CardTitle>Confirmar presenca</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {form}
       </CardContent>
     </Card>
   )

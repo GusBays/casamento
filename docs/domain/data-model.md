@@ -42,11 +42,13 @@ create table carts (
   id uuid primary key default gen_random_uuid(),
   token text not null unique,
   guest_id uuid,
+  order_id uuid,
   status text not null default 'active' check (status in ('active', 'converted', 'abandoned')),
   total integer not null default 0 check (total >= 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  constraint carts_guest_id_fkey foreign key (guest_id) references guests(id) on delete set null
+  constraint carts_guest_id_fkey foreign key (guest_id) references guests(id) on delete set null,
+  constraint carts_order_id_fkey foreign key (order_id) references orders(id) on delete set null
 );
 ```
 
@@ -75,12 +77,14 @@ create table cart_items (
 create table orders (
   id uuid primary key default gen_random_uuid(),
   guest_id uuid not null,
-  order_note text,
+  cart_id uuid,
+  note text,
   status text not null default 'pending' check (status in ('pending', 'paid', 'expired', 'cancelled')),
   total integer not null check (total > 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  constraint orders_guest_id_fkey foreign key (guest_id) references guests(id) on delete restrict
+  constraint orders_guest_id_fkey foreign key (guest_id) references guests(id) on delete restrict,
+  constraint orders_cart_id_fkey foreign key (cart_id) references carts(id) on delete set null
 );
 ```
 

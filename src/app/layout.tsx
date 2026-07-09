@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { NavigationLoader } from "@/common/components/navigation-loader";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,9 +38,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
+    <html lang="pt-BR" className="h-full antialiased" data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col">
+        <NavigationLoader />
         {children}
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ export const cartSchema = z.object({
   id: z.uuid(),
   token: z.string().min(1),
   guest_id: z.uuid().nullable(),
+  order_id: z.uuid().nullable().optional(),
   status: z.enum(['active', 'converted', 'abandoned']),
   total: z.number().int().min(0),
   created_at: z.string().optional(),
@@ -14,6 +15,11 @@ export const cartItemSchema = z.object({
   id: z.uuid(),
   cart_id: z.uuid(),
   gift_id: z.uuid().nullable(),
+  gift: z.object({
+    remaining: z.number().int().min(0),
+    quotes: z.number().int().min(1),
+    status: z.enum(['available', 'reserved', 'purchased']).optional()
+  }).nullable().optional(),
   name: z.string().min(1),
   image: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),

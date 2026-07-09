@@ -8,7 +8,7 @@ export class CartItemRepositorySupabase extends SupabaseRepository<CartItem> {
     const supabase = await this.client()
     const { data, error } = await supabase
       .from(this.TABLE)
-      .select()
+      .select('*, gift:gifts(remaining, quotes, status)')
       .eq('cart_id', cartId)
       .overrideTypes<CartItem[], { merge: false }>()
 
@@ -19,7 +19,10 @@ export class CartItemRepositorySupabase extends SupabaseRepository<CartItem> {
 
   async getByCartAndGift(cartId: string, giftId: string | null, name?: string) {
     const supabase = await this.client()
-    let query = supabase.from(this.TABLE).select().eq('cart_id', cartId)
+    let query = supabase
+      .from(this.TABLE)
+      .select('*, gift:gifts(remaining, quotes, status)')
+      .eq('cart_id', cartId)
 
     query = giftId ? query.eq('gift_id', giftId) : query.is('gift_id', null).eq('name', name ?? '')
 

@@ -45,6 +45,7 @@ export async function addGiftToCart(formData: FormData) {
   const name = String(formData.get('name') ?? '')
   const price = Number(formData.get('price') ?? 0)
   const image = String(formData.get('image') ?? '') || null
+  const quantity = Math.max(Number(formData.get('quantity') ?? 1), 1)
 
   await createCart({
     guest_id: null,
@@ -55,7 +56,7 @@ export async function addGiftToCart(formData: FormData) {
         image,
         name,
         price,
-        quantity: 1
+        quantity
       }
     ]
   })
@@ -74,6 +75,21 @@ export async function removeCartItem(formData: FormData) {
   await service().removeItem(cart.id, itemId)
 
   revalidatePath('/')
+  revalidatePath('/checkout')
+}
+
+export async function updateCartItemQuantity(formData: FormData) {
+  const token = await getCartToken()
+  const itemId = String(formData.get('itemId') ?? '')
+  const quantity = Number(formData.get('quantity') ?? 0)
+  const cart = token ? await service().getByToken(token) : null
+
+  if (!cart || !itemId || !Number.isFinite(quantity)) return
+
+  await service().updateItemQuantity(cart.id, itemId, quantity)
+
+  revalidatePath('/')
+  revalidatePath('/carrinho')
   revalidatePath('/checkout')
 }
 

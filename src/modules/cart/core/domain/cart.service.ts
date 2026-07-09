@@ -18,11 +18,14 @@ export class CartService extends BaseService<CartRecord, Cart> {
   async create(input: CreateCartInput) {
     const parsed = createCartWithItemsSchema.parse(input)
     const total = parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    const cart = await this.repository.create({
+    const cartInput = {
       token: parsed.token,
-      guest_id: parsed.guest_id,
       status: parsed.status,
-      total
+      total,
+      ...(parsed.guest_id ? { guest_id: parsed.guest_id } : {})
+    }
+    const cart = await this.repository.create({
+      ...cartInput
     })
 
     await Promise.all(parsed.items.map((item) => this.cartItemService.createForCart(cart.id, item)))
@@ -66,7 +69,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     const total = items.reduce((sum, item) => sum + item.total, 0)
 
     await this.update(existingCart.id, {
-      guest_id: input.guest_id,
+      ...(input.guest_id ? { guest_id: input.guest_id } : {}),
       status: input.status,
       total
     })
@@ -87,6 +90,32 @@ export class CartService extends BaseService<CartRecord, Cart> {
 
     const items = await this.getItems(cartId)
     const total = items.reduce((sum, item) => sum + item.total, 0)
+
+    await this.update(cartId, { total })
+
+    return this.getOne(cartId)
+  }
+
+  async updateItemQuantity(cartId: string, itemId: string, quantity: number) {
+    if (quantity <= 0) {
+      return this.removeItem(cartId, itemId)
+    }
+
+    const items = await this.getItems(cartId)
+    const item = items.find((currentItem) => currentItem.id === itemId)
+
+    if (!item) return this.getOne(cartId)
+
+    const maxQuantity = item.gift?.remaining ?? quantity
+    const nextQuantity = Math.min(Math.max(quantity, 1), maxQuantity)
+
+    await this.cartItemService.update(item.id, {
+      quantity: nextQuantity,
+      total: nextQuantity * item.price
+    })
+
+    const updatedItems = await this.getItems(cartId)
+    const total = updatedItems.reduce((sum, currentItem) => sum + currentItem.total, 0)
 
     await this.update(cartId, { total })
 

@@ -1,12 +1,12 @@
 import { CalendarCheck, Users } from 'lucide-react'
 
-import { SiteHeader } from '@/common/components/site-header'
+import { FloatingCart } from '@/common/components/floating-cart'
 import { RsvpForm } from '@/modules/rsvp/ui/components/rsvp-form'
 
 export function RsvpPage() {
   return (
     <>
-      <SiteHeader />
+      <FloatingCart />
       <main className="flex-1 border-b bg-[linear-gradient(135deg,#fff7ed_0%,#fff1f2_48%,#eef2ff_100%)]">
         <section className="mx-auto grid min-h-[calc(100svh-4rem)] w-full max-w-6xl items-center gap-10 px-4 py-12 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="space-y-8">

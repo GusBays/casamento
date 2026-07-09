@@ -12,7 +12,7 @@ export class CartRepositorySupabase extends SupabaseRepository<CartRecord, Cart>
     const supabase = await this.client()
     const { data, error } = await supabase
       .from(this.TABLE)
-      .select('*, items:cart_items(*)')
+      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))')
       .eq('id', id)
       .single<Cart>()
 
@@ -25,7 +25,7 @@ export class CartRepositorySupabase extends SupabaseRepository<CartRecord, Cart>
     const supabase = await this.client()
     const { data, error } = await supabase
       .from(this.TABLE)
-      .select('*, items:cart_items(*)')
+      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))')
       .eq('token', token)
       .maybeSingle<Cart>()
 
@@ -42,7 +42,7 @@ export class CartRepositorySupabase extends SupabaseRepository<CartRecord, Cart>
     const supabase = await this.client()
     const { data, error, count } = await supabase
       .from(this.TABLE)
-      .select('*, items:cart_items(*)', { count: 'exact' })
+      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))', { count: 'exact' })
       .range(from, to)
       .overrideTypes<Cart[], { merge: false }>()
 
@@ -68,7 +68,7 @@ export class CartRepositorySupabase extends SupabaseRepository<CartRecord, Cart>
     const supabase = await this.client()
     const { data, error } = await supabase
       .from(this.TABLE)
-      .select('*, items:cart_items(*)')
+      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))')
       .overrideTypes<Cart[], { merge: false }>()
 
     if (error) throw error

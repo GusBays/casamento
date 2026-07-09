@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag, Trash2 } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/currency";
@@ -13,8 +13,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { removeCartItem } from "@/modules/cart/ui/cart.action";
 import type { CartItem } from "@/modules/cart/core/domain/cart.schema";
+import { CartItemRow } from "@/modules/cart/ui/components/cart-item-row";
 
 type CartSheetProps = {
   items: CartItem[];
@@ -30,7 +30,7 @@ export function CartSheet({ items, totalCents }: CartSheetProps) {
         render={
           <Button
             aria-label={`Abrir carrinho com ${totalItems} itens`}
-            className="relative rounded-full border-[#606d42]/30 bg-[#f9f6ef] text-[#28351f] hover:bg-[#eef0e3]"
+            className="relative rounded-full border-[#606d42]/30 bg-[#f9f6ef] text-[#28351f] shadow-[0_12px_30px_rgba(40,53,31,0.18)] hover:bg-[#eef0e3]"
             size="icon-lg"
             variant="outline"
           />
@@ -56,27 +56,8 @@ export function CartSheet({ items, totalCents }: CartSheetProps) {
           ) : (
             <ul className="divide-y divide-[#9aa07b]/25">
               {items.map((item) => (
-                <li className="grid gap-3 py-5" key={item.id}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="font-serif text-lg">{item.name}</p>
-                      <p className="text-sm text-[#5e604f]">
-                        {item.quantity} x {formatCurrency(item.price)}
-                      </p>
-                    </div>
-                    <form action={removeCartItem}>
-                      <input name="itemId" type="hidden" value={item.id} />
-                      <Button
-                        aria-label={`Remover ${item.name}`}
-                        className="rounded-full"
-                        size="icon-sm"
-                        type="submit"
-                        variant="ghost"
-                      >
-                        <Trash2 className="size-4" aria-hidden />
-                      </Button>
-                    </form>
-                  </div>
+                <li key={`${item.id}-${item.quantity}`}>
+                  <CartItemRow item={item} />
                 </li>
               ))}
             </ul>
