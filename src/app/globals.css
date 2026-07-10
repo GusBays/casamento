@@ -213,22 +213,102 @@
   }
 
   .gift-title {
+    position: relative;
+    display: block;
+    width: min(100%, clamp(18.5rem, 46vw, 25.5rem));
+    height: clamp(8.7rem, 22.5vw, 12.4rem);
+    margin-inline: auto;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(3.1rem, 7.2vw, 5.8rem);
-    line-height: 0.78;
+    color: #020202;
+    line-height: 1;
   }
 
   .dress-title {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(2.5rem, 5.4vw, 4.3rem);
-    line-height: 0.82;
+    position: relative;
+    display: block;
+    width: min(100%, clamp(16.5rem, 42vw, 24rem));
+    height: clamp(7.1rem, 18vw, 10.3rem);
+    margin-inline: auto;
+    color: #020202;
+    line-height: 1;
   }
 
-  .dress-title span,
-  .gift-title span,
+  .dress-title__script,
+  .gift-title__script,
   .script-heading {
     font-family: "Snell Roundhand", "Brush Script MT", cursive;
     font-weight: 700;
+  }
+
+  .gift-title__script {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    font-size: clamp(6rem, 15.2vw, 8.4rem);
+    letter-spacing: 0;
+    line-height: 0.78;
+  }
+
+  .gift-title__de {
+    position: absolute;
+    left: 52%;
+    top: 34%;
+    font-size: clamp(2.9rem, 7.3vw, 4.1rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.82;
+  }
+
+  .gift-title__serif {
+    position: absolute;
+    left: 31%;
+    top: 62%;
+    font-size: clamp(3.5rem, 8.7vw, 4.9rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.78;
+  }
+
+  @media (max-width: 480px) {
+    .gift-title {
+      width: min(100%, 13.8rem);
+      height: 6.55rem;
+    }
+
+    .gift-title__script {
+      font-size: 4.45rem;
+    }
+
+    .gift-title__de {
+      font-size: 2.1rem;
+    }
+
+    .gift-title__serif {
+      left: 26%;
+      font-size: 2.45rem;
+    }
+  }
+
+  .dress-title__script {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    font-size: clamp(4.8rem, 12.2vw, 7rem);
+    letter-spacing: 0;
+    line-height: 0.78;
+  }
+
+  .dress-title__serif {
+    position: absolute;
+    left: 51%;
+    top: 43%;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3rem, 7.6vw, 4.3rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 0.78;
   }
 
   .script-heading {

@@ -1,19 +1,19 @@
-import Image from "next/image";
+import Image from 'next/image'
 
-import { FloatingCart } from "@/common/components/floating-cart";
+import { FloatingCart } from '@/common/components/floating-cart'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { GiftList } from "@/modules/gift/ui/components/gift-list";
-import { getPaginateGifts } from "@/modules/gift/ui/gift.action";
-import { RsvpForm } from "@/modules/rsvp/ui/components/rsvp-form";
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { GiftList } from '@/modules/gift/ui/components/gift-list'
+import { getPaginateGifts } from '@/modules/gift/ui/gift.action'
+import { RsvpForm } from '@/modules/rsvp/ui/components/rsvp-form'
 
 export default async function Home() {
-  const gifts = await getPaginateGifts({ page: 1, perPage: 8 });
+  const gifts = await getPaginateGifts({ page: 1, perPage: 8 })
 
   return (
     <>
@@ -45,10 +45,9 @@ export default async function Home() {
               height={156}
               className="mb-8 size-24 object-contain sm:size-28 md:size-32"
             />
-            <p className="max-w-4xl font-serif text-[clamp(1.15rem,2.7vw,2.35rem)] leading-tight">
-              ASSIM ELES JÁ NÃO SÃO DOIS, MAS SIM SÓ CARNE.
-              <br />
-              PORTANTO O QUE DEUS UNIU, NINGUEM SEPARE
+            <p className="italic max-w-4xl font-serif text-[clamp(1.15rem,2.7vw,2.35rem)] leading-tight">
+              &quot;ASSIM ELES JÁ NÃO SÃO DOIS, MAS SIM SÓ CARNE. PORTANTO O QUE DEUS
+              UNIU, NINGUEM SEPARE&quot;
             </p>
             <div className="my-8 grid w-full max-w-3xl grid-cols-[1fr_auto_1fr] items-center gap-4 font-serif text-[clamp(1.7rem,4.4vw,3.6rem)]">
               <span>17 out</span>
@@ -82,14 +81,13 @@ export default async function Home() {
               height={180}
               className="size-36 object-contain md:size-48"
             />
-            <p className="font-serif text-3xl md:text-5xl">Clique no botão</p>
             <Dialog>
               <DialogTrigger render={<button className="wedding-pill" type="button" />}>
-                confirme sua presença
+                Confirmar presença
               </DialogTrigger>
               <DialogContent className="max-h-[calc(100svh-2rem)] overflow-y-auto border-[#9aa07b]/50 bg-[#fbfaf5] p-6 sm:max-w-lg">
                 <DialogTitle className="font-serif text-3xl text-[#161616]">
-                  Confirmar presença
+                  Confirme sua presença
                 </DialogTitle>
                 <DialogDescription className="font-serif text-base leading-relaxed text-[#5e604f]">
                   Conta pra gente seu nome e quem vai junto.
@@ -97,9 +95,9 @@ export default async function Home() {
                 <RsvpForm variant="plain" />
               </DialogContent>
             </Dialog>
-            <p className="text-xl font-semibold md:text-2xl">confirmação até dia 19/09</p>
+            <p className="text-md font-semibold">Confirmação até dia 19/09</p>
             <a className="wedding-pill" href="#vestimenta">
-              informações de vestimenta
+              Informações de vestimenta
             </a>
             <a className="wedding-pill" href="#presentes">
               Lista de presentes
@@ -107,7 +105,10 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="vestimenta" className="ornate-page dress-section min-h-svh snap-start px-5 py-24">
+        <section
+          id="vestimenta"
+          className="ornate-page dress-section min-h-svh snap-start px-5 py-24"
+        >
           <div className="dress-hover-overlay" aria-hidden />
           <div className="relative z-10 mx-auto flex min-h-[calc(100svh-12rem)] max-w-6xl flex-col items-center justify-center text-center">
             <Image
@@ -117,20 +118,21 @@ export default async function Home() {
               height={168}
               className="mb-6 size-32 object-contain md:size-44"
             />
-            <h2 className="dress-title mb-3">
-              <span>Dress</span> code
+            <h2 className="dress-title mb-3" aria-label="Dress code">
+              <span className="dress-title__script">Dress</span>
+              <span className="dress-title__serif">code</span>
             </h2>
             <p className="mb-6 font-serif text-2xl md:text-3xl">Social</p>
             <p className="mb-8 max-w-3xl font-serif text-lg leading-relaxed md:text-xl">
-              Queremos que todos se sintam a vontade, lindos e especiais nesse dia tão importante
-              para nós.
+              Queremos que todos se sintam a vontade, lindos e especiais nesse dia tão
+              importante para nós.
             </p>
             <div className="dress-stage grid w-full items-end gap-8 md:grid-cols-[1fr_auto_1fr]">
               <div className="dress-copy dress-copy--ele order-2 space-y-4 md:order-1">
                 <h3 className="script-heading">Eles</h3>
                 <p className="mx-auto max-w-xs font-serif text-lg leading-snug md:text-xl">
-                  Terno ou blazer com camisa social. Gravata é opcional, Também pode vir com trage
-                  tipico gaucho.
+                  Terno ou blazer com camisa social. Gravata é opcional, Também pode vir
+                  com trage tipico gaucho.
                 </p>
               </div>
               <div className="order-1 flex justify-center gap-2 md:order-2">
@@ -156,7 +158,8 @@ export default async function Home() {
               <div className="dress-copy dress-copy--ela order-3 space-y-4">
                 <h3 className="script-heading">Elas</h3>
                 <p className="mx-auto max-w-xs font-serif text-lg leading-snug md:text-xl">
-                  Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem vindas
+                  Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem
+                  vindas
                 </p>
               </div>
             </div>
@@ -173,23 +176,24 @@ export default async function Home() {
                 height={176}
                 className="mx-auto size-32 object-contain md:size-40"
               />
-              <h2 className="gift-title">
-                <span>lista</span> de
-                <br />
-                presentes
+              <h2 className="gift-title" aria-label="Lista de presentes">
+                <span className="gift-title__script">lista</span>
+                <span className="gift-title__de">de</span>
+                <span className="gift-title__serif">presentes</span>
               </h2>
               <p className="font-serif text-xl leading-relaxed md:text-2xl">
-                Cada presente recebido fará parte da historia que estamos começando a construir.
-                Por isso, optamos por receber as contribuições via Pix,
+                Cada presente recebido fará parte da historia que estamos começando a
+                construir. Por isso, optamos por receber as contribuições via Pix,
               </p>
               <h3 className="pt-4 font-serif text-2xl font-semibold italic md:text-3xl">
-                como efetuar a compra
+                Como efetuar a compra
               </h3>
               <ol className="mx-auto max-w-5xl list-decimal space-y-2 pl-8 text-left text-lg leading-tight md:text-xl">
                 <li>Escolha seu presente ou parte do valor do presente desejado</li>
                 <li>Clique em “comprar” e realize o pix atraves do seu banco.</li>
                 <li>
-                  deixe uma mensagem de carinho para sabermos que foi o seu presente que recebemos.
+                  deixe uma mensagem de carinho para sabermos que foi o seu presente que
+                  recebemos.
                 </li>
               </ol>
             </div>
@@ -204,5 +208,5 @@ export default async function Home() {
         </section>
       </main>
     </>
-  );
+  )
 }
