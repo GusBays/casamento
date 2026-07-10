@@ -40,6 +40,18 @@ export async function deleteGift(id: string) {
   return service().delete(id)
 }
 
+export async function deleteGiftAdminAction(formData: FormData) {
+  await requireUser()
+
+  const giftId = String(formData.get('giftId') ?? '')
+
+  if (!giftId) return
+
+  await service().delete(giftId)
+  revalidatePath('/admin/presents')
+  redirect('/admin/presents')
+}
+
 export async function saveGiftAction(input: unknown) {
   await requireUser()
 

@@ -10,6 +10,9 @@ export type SupabaseRow = {
 export type PaginationParams = {
   page?: number
   perPage?: number
+  sort?: 'CREATED_AT'
+  reverse?: boolean
+  q?: string
 }
 
 export type PaginatedResult<T> = {
@@ -26,6 +29,7 @@ export type PaginatedResult<T> = {
 
 export abstract class SupabaseRepository<T extends SupabaseRow, TReturn = T> {
   protected abstract readonly TABLE: string
+  protected readonly SEARCHABLE: string[] = []
 
   constructor(private readonly supabaseClient?: SupabaseClient) {}
 
@@ -80,11 +84,20 @@ export abstract class SupabaseRepository<T extends SupabaseRow, TReturn = T> {
     const to = from + perPage - 1
 
     const supabase = await this.client()
-    const { data, error, count } = await supabase
+    let query = supabase
       .from(this.TABLE)
       .select('*', { count: 'exact' })
       .range(from, to)
-      .overrideTypes<TReturn[], { merge: false }>()
+
+    if (params.q) {
+      query = this.applySearch(query, params.q)
+    }
+
+    if (params.sort === 'CREATED_AT') {
+      query = query.order('created_at', { ascending: !params.reverse })
+    }
+
+    const { data, error, count } = await query.overrideTypes<TReturn[], { merge: false }>()
 
     if (error) throw error
 
@@ -102,6 +115,27 @@ export abstract class SupabaseRepository<T extends SupabaseRow, TReturn = T> {
         hasPreviousPage: page > 1
       }
     }
+  }
+
+  protected applySearch<TQuery extends { or: (filters: string) => TQuery }>(
+    query: TQuery,
+    q: string
+  ) {
+    const search = this.sanitizeSearch(q)
+
+    if (!search || this.SEARCHABLE.length === 0) return query
+
+    return query.or(
+      this.SEARCHABLE.map(field => `${this.toDbField(field)}.ilike.%${search}%`).join(',')
+    )
+  }
+
+  protected toDbField(field: string) {
+    return field.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
+  }
+
+  protected sanitizeSearch(q: string) {
+    return q.trim().replaceAll(',', ' ')
   }
 
   async getAll() {

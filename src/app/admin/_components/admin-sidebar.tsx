@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Gift, LogOut, PackageCheck, ReceiptText, ShoppingCart, Users } from 'lucide-react'
+import { Gift, PackageCheck, ReceiptText, ShoppingCart, Users } from 'lucide-react'
 
+import { LogoutButton } from '@/app/admin/_components/logout-button'
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +18,6 @@ import {
   SidebarMenuItem,
   SidebarRail
 } from '@/components/ui/sidebar'
-import { logoutUser } from '@/modules/user/ui/user.action'
 
 const items = [
   { href: '/admin/presents', label: 'Presentes', icon: Gift },
@@ -80,16 +80,11 @@ export function AdminSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <form action={logoutUser}>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Sair" type="submit">
-                <LogOut aria-hidden />
-                <span>Sair</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </form>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <LogoutButton />
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

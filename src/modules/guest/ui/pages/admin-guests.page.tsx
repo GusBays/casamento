@@ -1,7 +1,21 @@
+import { AdminPagination } from '@/common/components/admin-pagination'
+import { AdminTableSearch } from '@/common/components/admin-table-search'
 import { guestService } from '@/modules/guest/core/domain/guest.service'
 
-export async function AdminGuestsPage() {
-  const guests = await guestService.getAll()
+type AdminGuestsPageProps = {
+  page?: number
+  limit?: number
+  q?: string
+}
+
+export async function AdminGuestsPage({ page = 1, limit = 15, q }: AdminGuestsPageProps) {
+  const guests = await guestService.getPaginate({
+    page,
+    perPage: limit,
+    sort: 'CREATED_AT',
+    reverse: true,
+    q
+  })
 
   return (
     <div className="space-y-6">
@@ -9,6 +23,7 @@ export async function AdminGuestsPage() {
         <p className="text-sm text-muted-foreground">Convidados</p>
         <h1 className="text-2xl font-semibold">Lista de convidados</h1>
       </header>
+      <AdminTableSearch placeholder="Buscar convidados..." />
 
       <div className="overflow-hidden rounded-lg border bg-background">
         <table className="w-full min-w-[680px] text-sm">
@@ -21,7 +36,7 @@ export async function AdminGuestsPage() {
             </tr>
           </thead>
           <tbody>
-            {guests.map(guest => (
+            {guests.data.map(guest => (
               <tr className="border-b last:border-0" key={guest.id}>
                 <td className="px-4 py-3 font-medium">{guest.name}</td>
                 <td className="px-4 py-3">{guest.email}</td>
@@ -29,9 +44,17 @@ export async function AdminGuestsPage() {
                 <td className="px-4 py-3">{formatDate(guest.created_at)}</td>
               </tr>
             ))}
+            {guests.data.length === 0 ? (
+              <tr>
+                <td className="px-4 py-8 text-center text-muted-foreground" colSpan={4}>
+                  Nenhum convidado registrado.
+                </td>
+              </tr>
+            ) : null}
           </tbody>
         </table>
       </div>
+      <AdminPagination pageInfo={guests.pageInfo} />
     </div>
   )
 }

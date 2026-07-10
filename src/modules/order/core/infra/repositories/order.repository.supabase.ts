@@ -27,11 +27,20 @@ export class OrderRepositorySupabase extends SupabaseRepository<OrderRecord, Ord
     const from = (page - 1) * perPage
     const to = from + perPage - 1
     const supabase = await this.client()
-    const { data, error, count } = await supabase
+    let query = supabase
       .from(this.TABLE)
       .select('*, items:order_items(*), payment:order_payments(*)', { count: 'exact' })
       .range(from, to)
-      .overrideTypes<Order[], { merge: false }>()
+
+    if (params.q) {
+      query = this.applySearch(query, params.q)
+    }
+
+    if (params.sort === 'CREATED_AT') {
+      query = query.order('created_at', { ascending: !params.reverse })
+    }
+
+    const { data, error, count } = await query.overrideTypes<Order[], { merge: false }>()
 
     if (error) throw error
 

@@ -1,3 +1,5 @@
+import { AdminPagination } from '@/common/components/admin-pagination'
+import { AdminTableSearch } from '@/common/components/admin-table-search'
 import { createClient } from '@/lib/supabase/server'
 
 type Rsvp = {
@@ -11,12 +13,30 @@ type Rsvp = {
   } | null
 }
 
-export async function AdminRsvpPage() {
+type AdminRsvpPageProps = {
+  page?: number
+  limit?: number
+  q?: string
+}
+
+export async function AdminRsvpPage({ page = 1, limit = 15, q }: AdminRsvpPageProps) {
+  const currentPage = Math.max(page, 1)
+  const perPage = limit
+  const from = (currentPage - 1) * perPage
+  const to = from + perPage - 1
   const supabase = await createClient()
-  const { data, error } = await supabase
+  let query = supabase
     .from('rsvps')
-    .select('*, guest:guests(name, email)')
+    .select('*, guest:guests(name, email)', { count: 'exact' })
     .order('created_at', { ascending: false })
+    .range(from, to)
+
+  if (q?.trim()) {
+    const search = q.trim().replaceAll(',', ' ')
+    query = query.or(`companions.ilike.%${search}%`)
+  }
+
+  const { data, error, count } = await query
     .overrideTypes<Rsvp[], { merge: false }>()
 
   if (error) {
@@ -35,6 +55,16 @@ export async function AdminRsvpPage() {
   }
 
   const rsvps = data ?? []
+  const total = count ?? 0
+  const lastPage = Math.max(Math.ceil(total / perPage), 1)
+  const pageInfo = {
+    total,
+    page: currentPage,
+    perPage,
+    lastPage,
+    hasNextPage: currentPage < lastPage,
+    hasPreviousPage: currentPage > 1
+  }
 
   return (
     <div className="space-y-6">
@@ -42,6 +72,7 @@ export async function AdminRsvpPage() {
         <p className="text-sm text-muted-foreground">Confirmações</p>
         <h1 className="text-2xl font-semibold">RSVP</h1>
       </header>
+      <AdminTableSearch placeholder="Buscar confirmações..." />
 
       <div className="overflow-hidden rounded-lg border bg-background">
         <table className="w-full min-w-[620px] text-sm">
@@ -73,6 +104,7 @@ export async function AdminRsvpPage() {
           </tbody>
         </table>
       </div>
+      <AdminPagination pageInfo={pageInfo} />
     </div>
   )
 }

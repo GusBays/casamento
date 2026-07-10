@@ -40,11 +40,22 @@ export class CartRepositorySupabase extends SupabaseRepository<CartRecord, Cart>
     const from = (page - 1) * perPage
     const to = from + perPage - 1
     const supabase = await this.client()
-    const { data, error, count } = await supabase
+    let query = supabase
       .from(this.TABLE)
-      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))', { count: 'exact' })
+      .select('*, items:cart_items(*, gift:gifts(remaining, quotes, status))', {
+        count: 'exact'
+      })
       .range(from, to)
-      .overrideTypes<Cart[], { merge: false }>()
+
+    if (params.q) {
+      query = this.applySearch(query, params.q)
+    }
+
+    if (params.sort === 'CREATED_AT') {
+      query = query.order('created_at', { ascending: !params.reverse })
+    }
+
+    const { data, error, count } = await query.overrideTypes<Cart[], { merge: false }>()
 
     if (error) throw error
 

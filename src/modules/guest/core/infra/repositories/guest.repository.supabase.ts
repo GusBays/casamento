@@ -3,6 +3,7 @@ import type { Guest } from '@/modules/guest/core/domain/guest.schema'
 
 export class GuestRepositorySupabase extends SupabaseRepository<Guest> {
   protected readonly TABLE = 'guests'
+  protected readonly SEARCHABLE = ['name', 'email', 'phone']
 
   async getByEmail(email: string) {
     const supabase = await this.client()

@@ -1,9 +1,23 @@
+import { AdminPagination } from '@/common/components/admin-pagination'
+import { AdminTableSearch } from '@/common/components/admin-table-search'
 import { StatusBadge } from '@/common/components/status-badge'
 import { formatCurrency } from '@/lib/currency'
 import { cartService } from '@/modules/cart/core/domain/cart.service'
 
-export async function AdminCartsPage() {
-  const carts = await cartService.getAll()
+type AdminCartsPageProps = {
+  page?: number
+  limit?: number
+  q?: string
+}
+
+export async function AdminCartsPage({ page = 1, limit = 15, q }: AdminCartsPageProps) {
+  const carts = await cartService.getPaginate({
+    page,
+    perPage: limit,
+    sort: 'CREATED_AT',
+    reverse: true,
+    q
+  })
 
   return (
     <div className="space-y-6">
@@ -11,6 +25,7 @@ export async function AdminCartsPage() {
         <p className="text-sm text-muted-foreground">Carrinhos</p>
         <h1 className="text-2xl font-semibold">Carrinhos</h1>
       </header>
+      <AdminTableSearch placeholder="Buscar carrinhos..." />
 
       <div className="overflow-hidden rounded-lg border bg-background">
         <div className="overflow-x-auto">
@@ -26,7 +41,7 @@ export async function AdminCartsPage() {
               </tr>
             </thead>
             <tbody>
-              {carts.map(cart => (
+              {carts.data.map(cart => (
                 <tr className="border-b align-top last:border-0" key={cart.id}>
                   <td className="px-4 py-3 font-mono text-xs">{cart.id}</td>
                   <td className="px-4 py-3">
@@ -46,7 +61,7 @@ export async function AdminCartsPage() {
                   <td className="px-4 py-3">{formatDate(cart.created_at)}</td>
                 </tr>
               ))}
-              {carts.length === 0 ? (
+              {carts.data.length === 0 ? (
                 <tr>
                   <td className="px-4 py-8 text-center text-muted-foreground" colSpan={6}>
                     Nenhum carrinho registrado.
@@ -57,6 +72,7 @@ export async function AdminCartsPage() {
           </table>
         </div>
       </div>
+      <AdminPagination pageInfo={carts.pageInfo} />
     </div>
   )
 }

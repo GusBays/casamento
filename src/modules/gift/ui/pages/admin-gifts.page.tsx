@@ -2,18 +2,32 @@ import Link from 'next/link'
 import { Plus } from 'lucide-react'
 
 import { AdminNoticeToast } from '@/app/admin/_components/admin-notice-toast'
+import { AdminPagination } from '@/common/components/admin-pagination'
+import { AdminTableSearch } from '@/common/components/admin-table-search'
 import { buttonVariants } from '@/components/ui/button'
 import { StatusBadge } from '@/common/components/status-badge'
 import { formatCurrency } from '@/lib/currency'
 import { cn } from '@/lib/utils'
-import { getAllGifts } from '@/modules/gift/core/domain/gift.service'
+import { getGifts } from '@/modules/gift/core/domain/gift.service'
 
 type AdminGiftsPageProps = {
   notice?: string
+  page?: number
+  limit?: number
+  sort?: 'CREATED_AT'
+  reverse?: boolean
+  q?: string
 }
 
-export async function AdminGiftsPage({ notice }: AdminGiftsPageProps) {
-  const gifts = await getAllGifts()
+export async function AdminGiftsPage({
+  notice,
+  page = 1,
+  limit = 15,
+  sort = 'CREATED_AT',
+  reverse = true,
+  q
+}: AdminGiftsPageProps) {
+  const gifts = await getGifts({ page, perPage: limit, sort, reverse, q })
 
   return (
     <div className="space-y-6">
@@ -29,10 +43,11 @@ export async function AdminGiftsPage({ notice }: AdminGiftsPageProps) {
           Novo presente
         </Link>
       </header>
+      <AdminTableSearch placeholder="Buscar presentes..." />
 
       <div className="overflow-hidden rounded-lg border bg-background">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[860px] text-sm">
+          <table className="w-full min-w-[800px] text-sm">
             <thead className="border-b bg-muted/50 text-left">
               <tr>
                 <th className="px-4 py-3 font-medium">Imagem</th>
@@ -41,11 +56,10 @@ export async function AdminGiftsPage({ notice }: AdminGiftsPageProps) {
                 <th className="px-4 py-3 font-medium">Comprados</th>
                 <th className="px-4 py-3 font-medium">Restantes</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Ações</th>
               </tr>
             </thead>
             <tbody>
-              {gifts.map(gift => (
+              {gifts.data.map(gift => (
                 <tr className="border-b transition-colors hover:bg-muted/50 last:border-0" key={gift.id}>
                   <td className="px-4 py-3">
                     <Link href={`/admin/presents/${gift.id}`}>
@@ -88,19 +102,11 @@ export async function AdminGiftsPage({ notice }: AdminGiftsPageProps) {
                       <StatusBadge status={gift.status ?? 'available'} />
                     </Link>
                   </td>
-                  <td className="px-4 py-3">
-                    <Link
-                      className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                      href={`/admin/presents/${gift.id}`}
-                    >
-                      Abrir
-                    </Link>
-                  </td>
                 </tr>
               ))}
-              {gifts.length === 0 ? (
+              {gifts.data.length === 0 ? (
                 <tr>
-                  <td className="px-4 py-8 text-center text-muted-foreground" colSpan={7}>
+                  <td className="px-4 py-8 text-center text-muted-foreground" colSpan={6}>
                     Nenhum presente cadastrado.
                   </td>
                 </tr>
@@ -109,6 +115,7 @@ export async function AdminGiftsPage({ notice }: AdminGiftsPageProps) {
           </table>
         </div>
       </div>
+      <AdminPagination pageInfo={gifts.pageInfo} />
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/button'
+import { AdminPagination } from '@/common/components/admin-pagination'
+import { AdminTableSearch } from '@/common/components/admin-table-search'
 import { StatusBadge } from '@/common/components/status-badge'
 import { formatCurrency } from '@/lib/currency'
 import { createClient } from '@/lib/supabase/server'
@@ -21,17 +23,45 @@ type AdminOrder = {
   payment: OrderPayment | OrderPayment[] | null
 }
 
-export async function AdminOrdersPage() {
+type AdminOrdersPageProps = {
+  page?: number
+  limit?: number
+  q?: string
+}
+
+export async function AdminOrdersPage({ page = 1, limit = 15, q }: AdminOrdersPageProps) {
+  const currentPage = Math.max(page, 1)
+  const perPage = limit
+  const from = (currentPage - 1) * perPage
+  const to = from + perPage - 1
   const supabase = await createClient()
-  const { data, error } = await supabase
+  let query = supabase
     .from('orders')
-    .select('*, guest:guests(name, email, phone), items:order_items(*), payment:order_payments(*)')
+    .select('*, guest:guests(name, email, phone), items:order_items(*), payment:order_payments(*)', { count: 'exact' })
     .order('created_at', { ascending: false })
+    .range(from, to)
+
+  if (q?.trim()) {
+    const search = q.trim().replaceAll(',', ' ')
+    query = query.or(`id.ilike.%${search}%,status.ilike.%${search}%,note.ilike.%${search}%`)
+  }
+
+  const { data, error, count } = await query
     .overrideTypes<AdminOrder[], { merge: false }>()
 
   if (error) throw error
 
   const orders = data ?? []
+  const total = count ?? 0
+  const lastPage = Math.max(Math.ceil(total / perPage), 1)
+  const pageInfo = {
+    total,
+    page: currentPage,
+    perPage,
+    lastPage,
+    hasNextPage: currentPage < lastPage,
+    hasPreviousPage: currentPage > 1
+  }
 
   return (
     <div className="space-y-6">
@@ -39,6 +69,7 @@ export async function AdminOrdersPage() {
         <p className="text-sm text-muted-foreground">Pedidos</p>
         <h1 className="text-2xl font-semibold">Pedidos</h1>
       </header>
+      <AdminTableSearch placeholder="Buscar pedidos..." />
 
       <div className="overflow-hidden rounded-lg border bg-background">
         <div className="overflow-x-auto">
@@ -111,6 +142,7 @@ export async function AdminOrdersPage() {
           </table>
         </div>
       </div>
+      <AdminPagination pageInfo={pageInfo} />
     </div>
   )
 }
