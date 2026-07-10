@@ -6,7 +6,7 @@ export const cartSchema = z.object({
   guest_id: z.uuid().nullable(),
   order_id: z.uuid().nullable().optional(),
   status: z.enum(['active', 'converted', 'abandoned']),
-  total: z.number().int().min(0),
+  total: z.coerce.number().min(0),
   created_at: z.string().optional(),
   updated_at: z.string().optional()
 })
@@ -23,8 +23,8 @@ export const cartItemSchema = z.object({
   name: z.string().min(1),
   image: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),
-  price: z.number().int().positive(),
-  total: z.number().int().positive(),
+  price: z.coerce.number().positive(),
+  total: z.coerce.number().positive(),
   created_at: z.string().optional(),
   updated_at: z.string().optional()
 })

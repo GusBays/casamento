@@ -5,10 +5,20 @@ import { redirect } from 'next/navigation'
 
 import { createPixPayload } from '@/lib/pix'
 import type { PaginationParams } from '@/lib/supabase/supabase.repository'
-import type { CreateOrderInput, UpdateOrderInput } from '@/modules/order/core/domain/order.schema'
-import { getCurrentCart, clearCurrentCartCookie, updateCart } from '@/modules/cart/ui/cart.action'
+import {
+  clearCurrentCartCookie,
+  getCurrentCart,
+  updateCart
+} from '@/modules/cart/ui/cart.action'
 import { upsertGuestByEmail } from '@/modules/guest/ui/guest.action'
-import { orderService, type OrderService } from '@/modules/order/core/domain/order.service'
+import type {
+  CreateOrderInput,
+  UpdateOrderInput
+} from '@/modules/order/core/domain/order.schema'
+import {
+  orderService,
+  type OrderService
+} from '@/modules/order/core/domain/order.service'
 
 function service(): OrderService {
   return orderService
@@ -35,7 +45,7 @@ export async function finishCheckout(formData: FormData) {
     cart_id: cart.id,
     note: String(formData.get('note') ?? '').trim() || null,
     status: 'pending',
-    items: cart.items.map((item) => ({
+    items: cart.items.map(item => ({
       gift_id: item.gift_id,
       image: item.image,
       name: item.name,
@@ -62,7 +72,7 @@ export async function finishCheckout(formData: FormData) {
         key: pixKey,
         receiverName,
         receiverCity,
-        amountCents: cart.total,
+        amountCents: Math.round(cart.total * 100),
         txid: order.id
       })
     })

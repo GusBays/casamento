@@ -7,10 +7,10 @@ import { CheckoutForm } from '@/modules/order/ui/components/checkout-form'
 
 type CheckoutClientProps = {
   items: CartItem[]
-  totalCents: number
+  total: number
 }
 
-export function CheckoutClient({ items, totalCents }: CheckoutClientProps) {
+export function CheckoutClient({ items, total }: CheckoutClientProps) {
   const hasItems = items.length > 0
 
   return (
@@ -52,7 +52,7 @@ export function CheckoutClient({ items, totalCents }: CheckoutClientProps) {
             <Separator />
             <div className="flex items-center justify-between font-serif text-xl">
               <span>Total</span>
-              <span>{formatCurrency(totalCents)}</span>
+              <span>{formatCurrency(total)}</span>
             </div>
 
             <p className="text-sm leading-6 text-[#5e604f]">

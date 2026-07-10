@@ -1,4 +1,5 @@
 import { BaseService } from '@/lib/base.service'
+import { roundCurrency } from '@/lib/currency'
 import { CartItemRepositorySupabase } from '@/modules/cart/core/infra/repositories/cart-item.repository.supabase'
 import {
   createCartItemSchema,
@@ -13,7 +14,7 @@ export class CartItemService extends BaseService<CartItem> {
 
   createForCart(cartId: string, input: CreateCartItemInput) {
     const parsed = createCartItemSchema.parse(input)
-    const total = parsed.price * parsed.quantity
+    const total = roundCurrency(parsed.price * parsed.quantity)
 
     return super.create({ ...parsed, cart_id: cartId, total })
   }

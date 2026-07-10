@@ -8,7 +8,7 @@ import { getCurrentCart } from "@/modules/cart/ui/cart.action";
 export async function SiteHeader() {
   const cart = await getCurrentCart();
   const items = cart?.items ?? [];
-  const totalCents = items.reduce((sum, item) => sum + item.total, 0);
+  const total = items.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-[#9aa07b]/25 bg-[#fbfaf5]/88 backdrop-blur-md">
@@ -55,7 +55,7 @@ export async function SiteHeader() {
             Presentes
           </Link>
         </nav>
-        <CartSheet items={items} totalCents={totalCents} />
+        <CartSheet items={items} total={total} />
       </div>
     </header>
   );

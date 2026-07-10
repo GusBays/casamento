@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { createOrderItemSchema, orderItemSchema, type OrderItem, type CreateOrderItemInput } from './order-item.schema'
+import {
+  createOrderItemSchema,
+  orderItemSchema,
+  type CreateOrderItemInput,
+  type OrderItem
+} from './order-item.schema'
 import { createOrderPaymentSchema, orderPaymentSchema } from './order-payment.schema'
 
 export const orderSchema = z.object({
@@ -8,7 +13,7 @@ export const orderSchema = z.object({
   cart_id: z.uuid().nullable().optional(),
   note: z.string().nullable(),
   status: z.enum(['pending', 'paid', 'expired', 'cancelled']),
-  total: z.number().int().positive(),
+  total: z.coerce.number().positive(),
   created_at: z.string().optional(),
   updated_at: z.string().optional()
 })

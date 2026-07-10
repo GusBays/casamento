@@ -1,4 +1,5 @@
 import { BaseService } from '@/lib/base.service'
+import { roundCurrency } from '@/lib/currency'
 import { giftService } from '@/modules/gift/core/domain/gift.service'
 import { OrderRepositorySupabase } from '@/modules/order/core/infra/repositories/order.repository.supabase'
 import { OrderItemService } from './order-item.service'
@@ -22,7 +23,9 @@ export class OrderService extends BaseService<OrderRecord, Order> {
 
   async create(input: CreateOrderInput) {
     const parsed = createOrderWithItemsSchema.parse(input)
-    const total = parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const total = roundCurrency(
+      parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    )
     const order = await this.repository.create({
       guest_id: parsed.guest_id,
       cart_id: parsed.cart_id,
@@ -31,7 +34,9 @@ export class OrderService extends BaseService<OrderRecord, Order> {
       total
     })
 
-    await Promise.all(parsed.items.map((item) => this.orderItemService.createForOrder(order.id, item)))
+    await Promise.all(
+      parsed.items.map(item => this.orderItemService.createForOrder(order.id, item))
+    )
     await this.orderPaymentService.createForOrder(order.id, parsed.payment)
 
     return this.getOne(order.id)
@@ -69,7 +74,7 @@ export class OrderService extends BaseService<OrderRecord, Order> {
     await this.updatePaymentForOrder(order.id, { status: 'paid' })
 
     await Promise.all(
-      order.items.map(async (item) => {
+      order.items.map(async item => {
         if (!item.gift_id) return
 
         const gift = await giftService.getOne(item.gift_id)

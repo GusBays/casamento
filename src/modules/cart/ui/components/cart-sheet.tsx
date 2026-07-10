@@ -1,28 +1,28 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag } from 'lucide-react'
+import Link from 'next/link'
 
-import { Button, buttonVariants } from "@/components/ui/button";
-import { formatCurrency } from "@/lib/currency";
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import type { CartItem } from "@/modules/cart/core/domain/cart.schema";
-import { CartItemRow } from "@/modules/cart/ui/components/cart-item-row";
+  SheetTrigger
+} from '@/components/ui/sheet'
+import { formatCurrency } from '@/lib/currency'
+import type { CartItem } from '@/modules/cart/core/domain/cart.schema'
+import { CartItemRow } from '@/modules/cart/ui/components/cart-item-row'
 
 type CartSheetProps = {
-  items: CartItem[];
-  totalCents: number;
-};
+  items: CartItem[]
+  total: number
+}
 
-export function CartSheet({ items, totalCents }: CartSheetProps) {
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+export function CartSheet({ items, total }: CartSheetProps) {
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
     <Sheet>
@@ -55,7 +55,7 @@ export function CartSheet({ items, totalCents }: CartSheetProps) {
             </div>
           ) : (
             <ul className="divide-y divide-[#9aa07b]/25">
-              {items.map((item) => (
+              {items.map(item => (
                 <li key={`${item.id}-${item.quantity}`}>
                   <CartItemRow item={item} />
                 </li>
@@ -67,13 +67,13 @@ export function CartSheet({ items, totalCents }: CartSheetProps) {
         <SheetFooter className="border-t border-[#9aa07b]/30 bg-[#f4f1e9] p-5">
           <div className="flex items-center justify-between font-serif text-xl">
             <span>Total</span>
-            <span>{formatCurrency(totalCents)}</span>
+            <span>{formatCurrency(total)}</span>
           </div>
           <Link
             aria-disabled={items.length === 0}
             className={buttonVariants({
               className:
-                "h-11 rounded-full bg-[#3f4d2f] font-serif text-base text-[#fbfaf5] hover:bg-[#2f3b22] aria-disabled:pointer-events-none aria-disabled:opacity-50",
+                'h-11 rounded-full bg-[#3f4d2f] font-serif text-base text-[#fbfaf5] hover:bg-[#2f3b22] aria-disabled:pointer-events-none aria-disabled:opacity-50'
             })}
             href="/checkout"
           >
@@ -82,5 +82,5 @@ export function CartSheet({ items, totalCents }: CartSheetProps) {
         </SheetFooter>
       </SheetContent>
     </Sheet>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 create table if not exists gifts (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  price integer not null check (price > 0),
+  price decimal(10,2) not null check (price > 0),
   image text,
   quotes integer not null default 1 check (quotes > 0),
   remaining integer not null default 1 check (remaining >= 0),
@@ -37,7 +37,7 @@ create table if not exists carts (
   guest_id uuid references guests(id) on delete set null,
   order_id uuid,
   status text not null default 'active' check (status in ('active', 'converted', 'abandoned')),
-  total integer not null default 0 check (total >= 0),
+  total decimal(10,2) not null default 0 check (total >= 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -52,8 +52,8 @@ create table if not exists cart_items (
   name text not null,
   image text,
   quantity integer not null check (quantity > 0),
-  price integer not null check (price > 0),
-  total integer not null check (total > 0),
+  price decimal(10,2) not null check (price > 0),
+  total decimal(10,2) not null check (total > 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -64,7 +64,7 @@ create table if not exists orders (
   cart_id uuid references carts(id) on delete set null,
   note text,
   status text not null default 'pending' check (status in ('pending', 'paid', 'expired', 'cancelled')),
-  total integer not null check (total > 0),
+  total decimal(10,2) not null check (total > 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -87,8 +87,8 @@ create table if not exists order_items (
   name text not null,
   image text,
   quantity integer not null check (quantity > 0),
-  price integer not null check (price > 0),
-  total integer not null check (total > 0),
+  price decimal(10,2) not null check (price > 0),
+  total decimal(10,2) not null check (total > 0),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

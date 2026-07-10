@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/lib/currency'
 import type { OrderItem } from '@/modules/order/core/domain/order-item.schema'
 
 type OrderSummaryProps = {
@@ -16,11 +17,11 @@ export function OrderSummary({ items }: OrderSummaryProps) {
             <span>
               {item.quantity}x {item.name}
             </span>
-            <span>{item.total}</span>
+            <span>{formatCurrency(item.total)}</span>
           </li>
         ))}
       </ul>
-      <p className="font-semibold">Total: {total}</p>
+      <p className="font-semibold">Total: {formatCurrency(total)}</p>
     </section>
   )
 }

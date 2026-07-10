@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const giftSchema = z.object({
   id: z.uuid(),
   name: z.string().min(1),
-  price: z.number().int().positive(),
+  price: z.coerce.number().positive(),
   image: z.string().min(1).nullable(),
   quotes: z.number().int().min(1),
   remaining: z.number().int().min(0),

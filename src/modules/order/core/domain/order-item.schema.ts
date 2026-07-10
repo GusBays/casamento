@@ -7,8 +7,8 @@ export const orderItemSchema = z.object({
   name: z.string().min(1),
   image: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),
-  price: z.number().int().positive(),
-  total: z.number().int().positive(),
+  price: z.coerce.number().positive(),
+  total: z.coerce.number().positive(),
   created_at: z.string().optional(),
   updated_at: z.string().optional()
 })

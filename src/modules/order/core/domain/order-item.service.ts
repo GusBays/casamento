@@ -1,4 +1,5 @@
 import { BaseService } from '@/lib/base.service'
+import { roundCurrency } from '@/lib/currency'
 import { OrderItemRepositorySupabase } from '@/modules/order/core/infra/repositories/order-item.repository.supabase'
 import {
   createOrderItemSchema,
@@ -13,7 +14,7 @@ export class OrderItemService extends BaseService<OrderItem> {
 
   createForOrder(orderId: string, input: CreateOrderItemInput) {
     const parsed = createOrderItemSchema.parse(input)
-    const total = parsed.price * parsed.quantity
+    const total = roundCurrency(parsed.price * parsed.quantity)
 
     return super.create({ ...parsed, order_id: orderId, total })
   }

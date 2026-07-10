@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/currency";
+import { formatCurrency, roundCurrency } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 import { AddGiftToCartForm } from "@/modules/gift/ui/components/add-gift-to-cart-form";
 import type { Gift as GiftType } from "@/modules/gift/core/domain/gift.schema";
@@ -22,7 +22,7 @@ export function GiftCard({ gift }: GiftCardProps) {
   const status = gift.status ?? (gift.remaining > 0 ? "available" : "purchased");
   const disabled = status !== "available";
   const purchased = status === "purchased";
-  const quotaPrice = Math.round(gift.price / gift.quotes);
+  const quotaPrice = roundCurrency(gift.price / gift.quotes);
   const giftWithQuotaPrice = {
     ...gift,
     price: quotaPrice,

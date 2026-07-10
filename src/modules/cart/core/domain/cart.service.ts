@@ -1,4 +1,5 @@
 import { BaseService } from '@/lib/base.service'
+import { roundCurrency } from '@/lib/currency'
 import { CartRepositorySupabase } from '@/modules/cart/core/infra/repositories/cart.repository.supabase'
 import { CartItemService } from './cart-item.service'
 import {
@@ -17,7 +18,9 @@ export class CartService extends BaseService<CartRecord, Cart> {
 
   async create(input: CreateCartInput) {
     const parsed = createCartWithItemsSchema.parse(input)
-    const total = parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const total = roundCurrency(
+      parsed.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    )
     const cartInput = {
       token: parsed.token,
       status: parsed.status,
@@ -28,7 +31,9 @@ export class CartService extends BaseService<CartRecord, Cart> {
       ...cartInput
     })
 
-    await Promise.all(parsed.items.map((item) => this.cartItemService.createForCart(cart.id, item)))
+    await Promise.all(
+      parsed.items.map(item => this.cartItemService.createForCart(cart.id, item))
+    )
 
     return this.getOne(cart.id)
   }
@@ -45,7 +50,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     }
 
     await Promise.all(
-      input.items.map(async (item) => {
+      input.items.map(async item => {
         const currentItem = await this.cartItemService.getByCartAndGift(
           existingCart.id,
           item.gift_id,
@@ -60,13 +65,13 @@ export class CartService extends BaseService<CartRecord, Cart> {
 
         return this.cartItemService.update(currentItem.id, {
           quantity,
-          total: quantity * currentItem.price
+          total: roundCurrency(quantity * currentItem.price)
         })
       })
     )
 
     const items = await this.getItems(existingCart.id)
-    const total = items.reduce((sum, item) => sum + item.total, 0)
+    const total = roundCurrency(items.reduce((sum, item) => sum + item.total, 0))
 
     await this.update(existingCart.id, {
       ...(input.guest_id ? { guest_id: input.guest_id } : {}),
@@ -89,7 +94,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     await this.cartItemService.deleteFromCart(cartId, itemId)
 
     const items = await this.getItems(cartId)
-    const total = items.reduce((sum, item) => sum + item.total, 0)
+    const total = roundCurrency(items.reduce((sum, item) => sum + item.total, 0))
 
     await this.update(cartId, { total })
 
@@ -102,7 +107,7 @@ export class CartService extends BaseService<CartRecord, Cart> {
     }
 
     const items = await this.getItems(cartId)
-    const item = items.find((currentItem) => currentItem.id === itemId)
+    const item = items.find(currentItem => currentItem.id === itemId)
 
     if (!item) return this.getOne(cartId)
 
@@ -111,11 +116,13 @@ export class CartService extends BaseService<CartRecord, Cart> {
 
     await this.cartItemService.update(item.id, {
       quantity: nextQuantity,
-      total: nextQuantity * item.price
+      total: roundCurrency(nextQuantity * item.price)
     })
 
     const updatedItems = await this.getItems(cartId)
-    const total = updatedItems.reduce((sum, currentItem) => sum + currentItem.total, 0)
+    const total = roundCurrency(
+      updatedItems.reduce((sum, currentItem) => sum + currentItem.total, 0)
+    )
 
     await this.update(cartId, { total })
 
