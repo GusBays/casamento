@@ -19,6 +19,7 @@ import {
   orderService,
   type OrderService
 } from '@/modules/order/core/domain/order.service'
+import { requireUser } from '@/modules/user/core/domain/user.service'
 
 function service(): OrderService {
   return orderService
@@ -118,4 +119,16 @@ export async function getPaginateOrders(params?: PaginationParams) {
 
 export async function deleteOrder(id: string) {
   return service().delete(id)
+}
+
+export async function markOrderAsPaid(formData: FormData) {
+  await requireUser()
+
+  const orderId = String(formData.get('orderId') ?? '')
+
+  if (!orderId) return
+
+  await service().confirmManualPayment(orderId)
+  revalidatePath('/admin/orders')
+  revalidatePath(`/order/${orderId}`)
 }

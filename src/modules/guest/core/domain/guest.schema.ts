@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 export const guestSchema = z.object({
   id: z.uuid(),

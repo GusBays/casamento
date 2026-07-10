@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from '@/lib/zod'
 
 export const giftSchema = z.object({
   id: z.uuid(),
@@ -20,6 +20,17 @@ export const createGiftSchema = giftSchema.omit({
 
 export const updateGiftSchema = createGiftSchema.partial()
 
+export const giftFormSchema = createGiftSchema.extend({
+  id: z.union([z.literal('new'), z.uuid()]),
+  image: z
+    .string()
+    .trim()
+    .optional()
+    .transform(value => value || null)
+})
+
 export type Gift = z.infer<typeof giftSchema>
 export type CreateGiftInput = z.infer<typeof createGiftSchema>
 export type UpdateGiftInput = z.infer<typeof updateGiftSchema>
+export type GiftFormInput = z.input<typeof giftFormSchema>
+export type GiftFormOutput = z.output<typeof giftFormSchema>

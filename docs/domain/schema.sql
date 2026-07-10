@@ -105,3 +105,26 @@ create table if not exists order_payments (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+create table if not exists rsvps (
+  id uuid primary key default gen_random_uuid(),
+  guest_id uuid not null references guests(id) on delete cascade,
+  companions text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint rsvps_guest_id_key unique (guest_id)
+);
+
+alter table rsvps add column if not exists guest_id uuid references guests(id) on delete cascade;
+alter table rsvps drop constraint if exists rsvps_guest_id_key;
+alter table rsvps add constraint rsvps_guest_id_key unique (guest_id);
+alter table rsvps drop column if exists guest_name;
+
+create table if not exists users (
+  id uuid primary key default gen_random_uuid(),
+  username text not null unique,
+  password text not null,
+  token text unique,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);

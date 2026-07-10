@@ -128,6 +128,35 @@ create table order_payments (
 );
 ```
 
+### rsvps
+
+```sql
+create table rsvps (
+  id uuid primary key default gen_random_uuid(),
+  guest_id uuid not null,
+  companions text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint rsvps_guest_id_key unique (guest_id),
+  constraint rsvps_guest_id_fkey foreign key (guest_id) references guests(id) on delete cascade
+);
+```
+
+### users
+
+Simple admin login table. `token` stores the active admin session cookie value.
+
+```sql
+create table users (
+  id uuid primary key default gen_random_uuid(),
+  username text not null unique,
+  password text not null,
+  token text unique,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+```
+
 ## Module Map
 
 - `src/modules/gift`: gift catalog.
@@ -135,9 +164,10 @@ create table order_payments (
 - `src/modules/guest`: guest identity used by checkout orders.
 - `src/modules/order`: confirmed orders and order items.
 - `src/modules/order/core/domain/order-payment.*`: order payment submodule used by the order backend.
+- `src/modules/user`: simple admin user login, cookie token, and authorization helpers.
 
 ## RLS Direction
 
 - `gifts`: public read for catalog fields.
-- `guests`, `carts`, `cart_items`, `orders`, `order_items`, `order_payments`: no direct public writes. Use server actions or route handlers.
+- `guests`, `carts`, `cart_items`, `orders`, `order_items`, `order_payments`, `rsvps`, `users`: no direct public writes. Use server actions or route handlers.
 - Service-role access only on the server when privileged operations are required.

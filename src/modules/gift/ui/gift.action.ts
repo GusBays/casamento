@@ -1,8 +1,16 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+
 import type { PaginationParams } from '@/lib/supabase/supabase.repository'
-import type { CreateGiftInput, UpdateGiftInput } from '@/modules/gift/core/domain/gift.schema'
+import {
+  giftFormSchema,
+  type CreateGiftInput,
+  type UpdateGiftInput
+} from '@/modules/gift/core/domain/gift.schema'
 import { giftService, type GiftService } from '@/modules/gift/core/domain/gift.service'
+import { requireUser } from '@/modules/user/core/domain/user.service'
 
 function service(): GiftService {
   return giftService
@@ -30,4 +38,22 @@ export async function getPaginateGifts(params?: PaginationParams) {
 
 export async function deleteGift(id: string) {
   return service().delete(id)
+}
+
+export async function saveGiftAction(input: unknown) {
+  await requireUser()
+
+  const parsed = giftFormSchema.parse(input)
+  const { id, ...giftInput } = parsed
+
+  if (id === 'new') {
+    await createGift(giftInput)
+    revalidatePath('/admin/presents')
+    redirect('/admin/presents?notice=gift-created')
+  }
+
+  await updateGift(id, giftInput)
+  revalidatePath('/admin/presents')
+  revalidatePath(`/admin/presents/${id}`)
+  redirect('/admin/presents?notice=gift-updated')
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { NavigationLoader } from '@/common/components/navigation-loader'
 import { Toaster } from '@/components/ui/sonner'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
@@ -41,10 +42,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="h-full antialiased" data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col">
-        <NavigationLoader />
-        <SpeedInsights />
-        {children}
-        <Toaster richColors position="top-center" />
+        <TooltipProvider>
+          <NavigationLoader />
+          <SpeedInsights />
+          {children}
+          <Toaster richColors position="top-center" />
+        </TooltipProvider>
       </body>
     </html>
   )

@@ -43,7 +43,7 @@ export class GuestService extends BaseService<Guest> {
 
     return this.update(currentGuest.id, {
       name: parsed.name,
-      phone: parsed.phone
+      ...(parsed.phone ? { phone: parsed.phone } : {})
     })
   }
 }
