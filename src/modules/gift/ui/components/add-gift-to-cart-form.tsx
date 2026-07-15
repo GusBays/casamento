@@ -60,11 +60,11 @@ export function AddGiftToCartForm({ gift, disabled }: AddGiftToCartFormProps) {
       <input name="image" type="hidden" value={gift.image ?? ""} />
       <input name="quantity" type="hidden" value={shouldChooseQuantity ? quantity : 1} />
       <Button
-        className="h-10 w-full rounded-full bg-[#3f4d2f] font-serif text-base text-[#fbfaf5] hover:bg-[#2f3b22]"
+        className="h-8 w-full rounded-full bg-[#3f4d2f] px-1 font-serif text-[0.68rem] text-[#fbfaf5] hover:bg-[#2f3b22] sm:h-10 sm:px-2.5 sm:text-base"
         disabled={disabled || isPending}
         type="submit"
       >
-        {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Heart className="size-4" aria-hidden />}
+        {isPending ? <Loader2 className="size-3 animate-spin sm:size-4" aria-hidden /> : <Heart className="size-3 sm:size-4" aria-hidden />}
         {isPending ? "Adicionando..." : "Comprar"}
       </Button>
     </form>
@@ -77,13 +77,13 @@ export function AddGiftToCartForm({ gift, disabled }: AddGiftToCartFormProps) {
       <SheetTrigger
         render={
           <Button
-            className="h-10 w-full rounded-full bg-[#3f4d2f] font-serif text-base text-[#fbfaf5] hover:bg-[#2f3b22]"
+            className="h-8 w-full rounded-full bg-[#3f4d2f] px-1 font-serif text-[0.68rem] text-[#fbfaf5] hover:bg-[#2f3b22] sm:h-10 sm:px-2.5 sm:text-base"
             disabled={disabled}
             type="button"
           />
         }
       >
-        <Heart className="size-4" aria-hidden />
+        <Heart className="size-3 sm:size-4" aria-hidden />
         Comprar
       </SheetTrigger>
       <SheetContent

@@ -43,7 +43,7 @@ export function GiftList({
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
         {gifts.map((gift) => (
           <GiftCard gift={gift} key={gift.id} />
         ))}

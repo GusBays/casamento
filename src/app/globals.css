@@ -128,7 +128,6 @@
   }
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
   }
 }
 
@@ -147,35 +146,6 @@
         border-box;
     border: clamp(14px, 2vw, 26px) solid transparent;
     box-shadow: inset 0 0 0 1px rgba(154, 160, 123, 0.45);
-  }
-
-  .ornate-page::before,
-  .ornate-page::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    inset: clamp(18px, 2.4vw, 34px);
-    border: 2px solid rgba(154, 160, 123, 0.7);
-    border-radius: 42% 58% 46% 54% / 2% 2% 98% 98%;
-    mask-image: linear-gradient(
-      to bottom,
-      #000 0 9%,
-      transparent 9% 17%,
-      #000 17% 33%,
-      transparent 33% 41%,
-      #000 41% 59%,
-      transparent 59% 67%,
-      #000 67% 83%,
-      transparent 83% 91%,
-      #000 91% 100%
-    );
-  }
-
-  .ornate-page::after {
-    inset: clamp(25px, 3vw, 44px);
-    border-width: 1px;
-    opacity: 0.55;
-    transform: scaleX(0.985);
   }
 
   .wedding-kicker {
@@ -312,31 +282,13 @@
   }
 
   .script-heading {
-    font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+    font-size: clamp(1.45rem, 4.8vw, 3.8rem);
     line-height: 0.8;
-  }
-
-  .dress-hover-overlay {
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      radial-gradient(circle at var(--dress-spot-x, 50%) 58%, transparent 0 15rem, rgba(13, 15, 11, 0.38) 28rem),
-      rgba(13, 15, 11, 0.18);
-    opacity: 0;
-    transition:
-      opacity 220ms ease,
-      background 220ms ease;
   }
 
   .dress-copy,
   .dress-person {
     position: relative;
-    transition:
-      opacity 220ms ease,
-      filter 220ms ease,
-      transform 220ms ease;
   }
 
   .dress-person {
@@ -347,51 +299,6 @@
 
   .dress-person img {
     filter: drop-shadow(0 18px 20px rgba(38, 41, 29, 0.14));
-    transition:
-      filter 220ms ease,
-      transform 220ms ease;
-  }
-
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) {
-    --dress-spot-x: 42%;
-  }
-
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) {
-    --dress-spot-x: 58%;
-  }
-
-  .dress-section:has(.dress-person:is(:hover, :focus-visible)) .dress-hover-overlay {
-    opacity: 1;
-  }
-
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy,
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ela,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ele {
-    opacity: 0.58;
-    filter: saturate(0.9);
-  }
-
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy--ele,
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ele,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy--ela,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ela {
-    opacity: 1;
-    filter: none;
-    transform: translateY(-0.25rem) scale(1.025);
-  }
-
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-copy--ele,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-copy--ela {
-    color: #fbfaf5;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.22);
-  }
-
-  .dress-section:has(.dress-person--ele:is(:hover, :focus-visible)) .dress-person--ele img,
-  .dress-section:has(.dress-person--ela:is(:hover, :focus-visible)) .dress-person--ela img {
-    filter:
-      drop-shadow(0 22px 28px rgba(0, 0, 0, 0.26))
-      drop-shadow(0 0 12px rgba(251, 250, 245, 0.28));
   }
 
   .dress-person:focus-visible {
