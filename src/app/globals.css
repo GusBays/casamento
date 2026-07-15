@@ -49,19 +49,19 @@
 }
 
 :root {
-  --background: #fbfaf5;
+  --background: #f4ecdf;
   --foreground: #161616;
   --font-body: Arial, Helvetica, sans-serif;
   --font-code: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --card: #fbfaf5;
+  --card: #f4ecdf;
   --card-foreground: #161616;
-  --popover: #fbfaf5;
+  --popover: #f4ecdf;
   --popover-foreground: #161616;
   --primary: #3f4d2f;
-  --primary-foreground: #fbfaf5;
+  --primary-foreground: #f4ecdf;
   --secondary: #eef0e3;
   --secondary-foreground: #28351f;
-  --muted: #f4f1e9;
+  --muted: #efe5d5;
   --muted-foreground: #5e604f;
   --accent: #eef0e3;
   --accent-foreground: #28351f;
@@ -135,17 +135,7 @@
   .ornate-page {
     position: relative;
     overflow: hidden;
-    background:
-      linear-gradient(#fbfaf5, #fbfaf5) padding-box,
-      repeating-linear-gradient(
-          90deg,
-          transparent 0 2.25rem,
-          rgba(154, 160, 123, 0.85) 2.25rem 2.35rem,
-          transparent 2.35rem 4.8rem
-        )
-        border-box;
-    border: clamp(14px, 2vw, 26px) solid transparent;
-    box-shadow: inset 0 0 0 1px rgba(154, 160, 123, 0.45);
+    background: #f4ecdf;
   }
 
   .wedding-kicker {
