@@ -9,7 +9,7 @@ import { createOrderPaymentSchema, orderPaymentSchema } from './order-payment.sc
 
 export const orderSchema = z.object({
   id: z.uuid(),
-  guest_id: z.uuid(),
+  guest_id: z.uuid().nullable(),
   cart_id: z.uuid().nullable().optional(),
   note: z.string().nullable(),
   status: z.enum(['pending', 'paid', 'expired', 'cancelled']),

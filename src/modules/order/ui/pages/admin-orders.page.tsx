@@ -101,8 +101,13 @@ export async function AdminOrdersPage({ page = 1, limit = 15, q }: AdminOrdersPa
                       </p>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="font-medium">{order.guest?.name ?? '-'}</p>
+                      <p className="font-medium">{order.guest?.name ?? 'Anônimo'}</p>
                       <p className="text-xs text-muted-foreground">{order.guest?.email ?? '-'}</p>
+                      {order.note ? (
+                        <p className="mt-2 max-w-64 whitespace-pre-line text-xs text-muted-foreground">
+                          {order.note}
+                        </p>
+                      ) : null}
                     </td>
                     <td className="px-4 py-3">
                       <ul className="grid gap-1">

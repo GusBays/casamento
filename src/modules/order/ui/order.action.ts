@@ -10,7 +10,6 @@ import {
   getCurrentCart,
   updateCart
 } from '@/modules/cart/ui/cart.action'
-import { upsertGuestByEmail } from '@/modules/guest/ui/guest.action'
 import type {
   CreateOrderInput,
   UpdateOrderInput
@@ -36,15 +35,16 @@ export async function finishCheckout(formData: FormData) {
     redirect('/#presentes')
   }
 
-  const guest = await upsertGuestByEmail({
-    name: String(formData.get('guest_name') ?? '').trim(),
-    email: String(formData.get('guest_email') ?? '').trim(),
-    phone: String(formData.get('guest_phone') ?? '').trim() || null
-  })
+  const guestName = String(formData.get('guest_name') ?? '').trim()
+  const message = String(formData.get('note') ?? '').trim()
+  const note = [guestName ? `Presente de: ${guestName}` : null, message || null]
+    .filter(Boolean)
+    .join('\n\n') || null
+
   const order = await service().create({
-    guest_id: guest.id,
+    guest_id: null,
     cart_id: cart.id,
-    note: String(formData.get('note') ?? '').trim() || null,
+    note,
     status: 'pending',
     items: cart.items.map(item => ({
       gift_id: item.gift_id,
@@ -80,7 +80,7 @@ export async function finishCheckout(formData: FormData) {
   }
 
   await updateCart(cart.id, {
-    guest_id: guest.id,
+    guest_id: null,
     order_id: order.id,
     status: 'converted',
     total: cart.total

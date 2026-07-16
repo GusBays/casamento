@@ -22,9 +22,9 @@ export default async function OrderPage({ params }: OrderPageProps) {
   const isPaid = order.status === "paid" || payment?.status === "paid";
 
   return (
-    <main className="ornate-page min-h-svh px-4 py-24 text-[#161616]">
-      <section className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[1fr_400px]">
-        <div className="space-y-7">
+    <main className="ornate-page min-h-svh overflow-x-hidden px-3 py-16 text-[#161616] sm:px-4 sm:py-24">
+      <section className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,400px)] lg:gap-8">
+        <div className="min-w-0 space-y-7">
           <BackHomeLink />
           <div className="space-y-4">
             <p className="wedding-kicker">Pedido</p>
@@ -36,36 +36,36 @@ export default async function OrderPage({ params }: OrderPageProps) {
             </p>
           </div>
 
-          <div className="rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/80 p-5 shadow-sm">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
+          <div className="min-w-0 rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/80 p-4 shadow-sm sm:p-5">
+            <div className="flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:justify-between">
+              <div className="min-w-0">
                 <p className="font-serif text-2xl text-[#3f4d2f]">
                   {isPaid ? "Pagamento confirmado." : "Pedido criado."}
                 </p>
                 <p className="mt-2 break-all text-xs text-[#5e604f]">Pedido: {order.id}</p>
               </div>
-              <p className="rounded-full bg-[#eef0e3] px-4 py-2 font-serif text-xl text-[#28351f]">
+              <p className="max-w-full rounded-full bg-[#eef0e3] px-4 py-2 font-serif text-xl text-[#28351f]">
                 {formatCurrency(order.total)}
               </p>
             </div>
           </div>
 
-          <div className="rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/80 p-5 shadow-sm">
+          <div className="min-w-0 rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/80 p-4 shadow-sm sm:p-5">
             <h2 className="font-serif text-2xl">Itens comprados</h2>
             <div className="mt-4">
               <OrderItemsSummary items={order.items} />
             </div>
             <Separator className="my-4" />
-            <div className="flex items-center justify-between font-serif text-xl">
+            <div className="flex min-w-0 items-center justify-between gap-4 font-serif text-xl">
               <span>Total</span>
-              <span>{formatCurrency(order.total)}</span>
+              <span className="shrink-0">{formatCurrency(order.total)}</span>
             </div>
           </div>
 
           <ConfirmPaymentForm isPaid={isPaid} orderId={order.id} />
         </div>
 
-        <aside className="rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/90 p-5 shadow-sm">
+        <aside className="min-w-0 rounded-lg border border-[#9aa07b]/35 bg-[#fbfaf5]/90 p-4 shadow-sm sm:p-5">
           <OrderPixPanel pixPayload={payment?.pix_payload ?? null} />
         </aside>
       </section>

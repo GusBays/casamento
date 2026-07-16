@@ -31,7 +31,7 @@ export function OrderPixPanel({ pixPayload }: OrderPixPanelProps) {
 
   return (
     <div className="space-y-5">
-      <div className="rounded-lg border border-[#9aa07b]/35 bg-white p-4">
+      <div className="mx-auto w-full max-w-40 rounded-lg border border-[#9aa07b]/35 bg-white p-3 sm:max-w-56 sm:p-4">
         <QRCodeSVG value={pixPayload} className="h-auto w-full" />
       </div>
       <div className="space-y-2">

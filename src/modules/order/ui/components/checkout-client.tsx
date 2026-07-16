@@ -23,8 +23,7 @@ export function CheckoutClient({ items, total }: CheckoutClientProps) {
               Confirme seu presente.
             </h1>
             <p className="max-w-2xl font-serif text-xl leading-relaxed text-[#38382f]">
-              Informe seus dados e deixe uma mensagem de carinho para sabermos qual foi o
-              seu presente.
+              Você pode assinar o presente com seu nome ou seguir de forma anônima.
             </p>
           </div>
 

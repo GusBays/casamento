@@ -76,7 +76,7 @@ create table cart_items (
 ```sql
 create table orders (
   id uuid primary key default gen_random_uuid(),
-  guest_id uuid not null,
+  guest_id uuid,
   cart_id uuid,
   note text,
   status text not null default 'pending' check (status in ('pending', 'paid', 'expired', 'cancelled')),

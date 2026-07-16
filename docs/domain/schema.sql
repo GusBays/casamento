@@ -60,7 +60,7 @@ create table if not exists cart_items (
 
 create table if not exists orders (
   id uuid primary key default gen_random_uuid(),
-  guest_id uuid not null references guests(id) on delete restrict,
+  guest_id uuid references guests(id) on delete restrict,
   cart_id uuid references carts(id) on delete set null,
   note text,
   status text not null default 'pending' check (status in ('pending', 'paid', 'expired', 'cancelled')),
@@ -70,6 +70,7 @@ create table if not exists orders (
 );
 
 alter table orders add column if not exists guest_id uuid references guests(id) on delete restrict;
+alter table orders alter column guest_id drop not null;
 alter table orders add column if not exists cart_id uuid references carts(id) on delete set null;
 alter table orders add column if not exists note text;
 alter table orders drop column if exists order_note;

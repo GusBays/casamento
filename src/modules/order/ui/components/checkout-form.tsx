@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { Loader2, Mail, Phone, UserRound } from "lucide-react";
+import { Loader2, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -38,39 +38,19 @@ export function CheckoutForm({ disabled }: CheckoutFormProps) {
         <div className="space-y-1">
           <h2 className="font-serif text-2xl">Cadastro</h2>
           <p className="text-sm leading-6 text-[#5e604f]">
-            Seus dados ajudam a gente a identificar o presente.
+            Seu nome ajuda a gente a identificar o presente, mas você pode deixar em branco.
           </p>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="guest_name">Nome</Label>
+          <Label htmlFor="guest_name">Nome opcional</Label>
           <div className="relative">
             <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#606d42]" />
-            <Input id="guest_name" name="guest_name" placeholder="Seu nome" className="h-11 pl-10" required />
-          </div>
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="guest_email">Email</Label>
-          <div className="relative">
-            <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#606d42]" />
             <Input
-              id="guest_email"
-              name="guest_email"
-              placeholder="voce@email.com"
+              id="guest_name"
+              name="guest_name"
+              placeholder="Seu nome, se quiser"
               className="h-11 pl-10"
-              type="email"
-              required
-            />
-          </div>
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="guest_phone">Telefone</Label>
-          <div className="relative">
-            <Phone className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#606d42]" />
-            <Input
-              id="guest_phone"
-              name="guest_phone"
-              placeholder="(51) 99999-9999"
-              className="h-11 pl-10"
+              autoComplete="name"
             />
           </div>
         </div>

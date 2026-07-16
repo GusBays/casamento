@@ -159,8 +159,8 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="como-comprar" className="ornate-page px-5 py-10">
-          <div className="mx-auto flex min-h-[calc(100svh-12rem)] w-full max-w-5xl flex-col items-center justify-center gap-8 text-center">
+        <section id="como-comprar" className="ornate-page px-5 py-16 md:py-24">
+          <div className="mx-auto flex min-h-[calc(100svh-12rem)] w-full max-w-5xl flex-col items-center justify-center gap-10 text-center">
             <Image
               src="/logo.png"
               alt="Logo Gustavo e Ana"
@@ -178,12 +178,22 @@ export default async function Home() {
                 Cada presente recebido fará parte da história que estamos começando a
                 construir. Por isso, optamos por receber as contribuições via Pix.
               </p>
-              <h3 className="pt-4 font-serif text-2xl font-semibold italic md:text-3xl">
+            </div>
+          </div>
+        </section>
+
+        <section className="ornate-page px-5 py-16 md:py-24">
+          <div className="mx-auto flex min-h-[calc(100svh-18rem)] w-full max-w-5xl flex-col items-center justify-center text-center">
+            <div className="mx-auto max-w-4xl space-y-8 text-center">
+              <h3 className="font-serif text-2xl font-semibold italic md:text-3xl">
                 Como efetuar a compra
               </h3>
-              <ol className="mx-auto max-w-5xl list-decimal space-y-2 pl-8 text-left text-lg leading-tight md:text-xl">
+              <ol className="mx-auto max-w-3xl list-decimal space-y-3 pl-8 text-left font-serif text-lg leading-relaxed md:text-xl">
                 <li>Escolha seu presente ou parte do valor do presente desejado</li>
-                <li>Clique em “comprar” e realize o Pix através do seu banco.</li>
+                <li>
+                  Clique em “comprar”, copie o código do Pix e realize o pagamento através
+                  do seu banco.
+                </li>
                 <li>
                   Deixe uma mensagem de carinho para sabermos que foi o seu presente que
                   recebemos.
@@ -193,8 +203,8 @@ export default async function Home() {
           </div>
         </section>
 
-        <section id="presentes" className="ornate-page px-3 sm:px-5 py-10">
-          <div className="mx-auto flex min-h-[calc(100svh-8rem)] w-full max-w-6xl flex-col justify-center gap-8 md:min-h-[calc(100svh-12rem)]">
+        <section id="presentes" className="ornate-page px-3 py-16 sm:px-5 md:py-24">
+          <div className="mx-auto flex min-h-[calc(100svh-8rem)] w-full max-w-6xl flex-col items-center justify-center gap-10 text-center md:min-h-[calc(100svh-12rem)] md:gap-14">
             <div className="mx-auto max-w-4xl space-y-4 text-center">
               <h2 className="font-serif text-[clamp(2.25rem,6vw,4.6rem)] leading-none">
                 Presentes
@@ -204,12 +214,14 @@ export default async function Home() {
               </p>
             </div>
 
-            <GiftList
-              gifts={gifts.data}
-              initialHasNextPage={gifts.pageInfo.hasNextPage}
-              initialPage={gifts.pageInfo.page}
-              perPage={gifts.pageInfo.perPage}
-            />
+            <div className="w-full text-left">
+              <GiftList
+                gifts={gifts.data}
+                initialHasNextPage={gifts.pageInfo.hasNextPage}
+                initialPage={gifts.pageInfo.page}
+                perPage={gifts.pageInfo.perPage}
+              />
+            </div>
           </div>
         </section>
       </main>

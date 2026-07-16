@@ -35,7 +35,7 @@ export function ConfirmPaymentForm({ orderId, isPaid }: ConfirmPaymentFormProps)
     <form action={submit}>
       <input name="orderId" type="hidden" value={orderId} />
       <Button
-        className="min-h-12 w-full rounded-full bg-[#3f4d2f] px-6 font-serif text-base text-[#fbfaf5] hover:bg-[#2f3b22]"
+        className="h-auto min-h-12 w-full min-w-0 whitespace-normal rounded-full bg-[#3f4d2f] px-5 py-3 text-center font-serif text-base leading-snug text-[#fbfaf5] hover:bg-[#2f3b22]"
         disabled={isPaid || isPending}
         type="submit"
       >
