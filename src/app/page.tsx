@@ -1,6 +1,8 @@
+import { Church, Wine } from 'lucide-react'
 import Image from 'next/image'
 
 import { AddressDialog } from '@/common/components/address-dialog'
+import { CountdownTimer } from '@/common/components/countdown-timer'
 import { FloatingCart } from '@/common/components/floating-cart'
 import {
   Dialog,
@@ -37,58 +39,68 @@ export default async function Home() {
           </picture>
         </section>
 
-        <section id="convite" className="ornate-page px-5 py-10">
-          <div className="mx-auto flex h-full max-w-5xl flex-col items-center justify-start pt-3 text-center md:pt-6">
-            <Image
-              src="/logo.png"
-              alt="Logo Gustavo e Ana"
-              width={220}
-              height={220}
-              className="mb-6 size-36 object-contain sm:size-40 md:size-52"
-            />
-            <p className="max-w-4xl font-serif text-[clamp(1.15rem,2.7vw,2.35rem)] leading-tight">
-              Convidamos você para o nosso casamento
-            </p>
-            <div className="my-8 grid w-full max-w-3xl grid-cols-[1fr_auto_1fr] items-center gap-4 font-serif text-[clamp(1.7rem,4.4vw,3.6rem)]">
+        <section id="convite" className="wedding-info-section relative">
+          <div className="wedding-info">
+            <div className="wedding-info__date">
               <span>17 out</span>
               <span aria-hidden>|</span>
               <span>14H30</span>
             </div>
-            <div className="space-y-5 font-serif text-[clamp(1.25rem,2.7vw,2.45rem)]">
-              <div className="space-y-2">
-                <h2>PAROQUIA SANTA CATARIA</h2>
-                <AddressDialog
-                  address="Rua Graciliano Ramos, 230, São Leopoldo"
-                  label="Paróquia Santa Catarina"
-                />
+
+            <div className="wedding-info__details">
+              <div className="wedding-info__reception">
+                <p className="wedding-info__label">RECEPÇÃO:</p>
+                <div>
+                  <h2>BLEST EVENTOS</h2>
+                  <AddressDialog
+                    address="Rua Cedro, 39, Sapucaia do Sul"
+                    label="Rua Cedro, 39, Sapucaia do Sul"
+                  />
+                </div>
               </div>
-              <p className="text-[clamp(1rem,2vw,1.7rem)]">RECEPÇÃO:</p>
-              <div className="space-y-2">
-                <h2>BLEST&nbsp;&nbsp; EVENTOS</h2>
-                <AddressDialog
-                  address="Rua Cedro, 39, Sapucaia do Sul"
-                  label="Blest Eventos"
-                />
+
+              <div className="wedding-info__divider" aria-hidden />
+
+              <div className="wedding-info__ceremony">
+                <div className="wedding-info__icon" aria-hidden>
+                  <Church strokeWidth={1.25} />
+                </div>
+                <div className="wedding-info__copy">
+                  <p className="wedding-info__label">CERIMONIA:</p>
+                  <h2>PAROQUIA SANTA CATARIA</h2>
+                  <AddressDialog
+                    address="Rua Graciliano Ramos, 230, São Leopoldo"
+                    label="Rua Graciliano Ramos, 230, São Leopoldo"
+                  />
+                </div>
+                <div className="wedding-info__toast" aria-hidden>
+                  <Wine strokeWidth={1.2} />
+                  <Wine strokeWidth={1.2} />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="confirmacao" className="ornate-page px-5 py-10">
-          <div className="mx-auto flex min-h-[calc(100svh-10rem)] max-w-5xl flex-col items-center justify-center gap-8 text-center">
-            <Image
-              src="/logo.png"
-              alt="Logo Gustavo e Ana"
-              width={220}
-              height={220}
-              className="size-36 object-contain sm:size-40 md:size-52"
-            />
-            <p className="font-serif text-xl font-semibold md:text-3xl">
-              Confirmação até dia 19/09
-            </p>
+        <section
+          className="wedding-photo-section relative"
+          aria-label="Foto do casamento"
+        >
+          <Image src="/2.jpg" alt="" fill sizes="100vw" className="object-cover" />
+        </section>
+
+        <section id="confirmacao" className="wedding-confirm-section relative">
+          <Image src="/3.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="wedding-confirm-panel">
+            <div className="wedding-confirm-heading">
+              <h2>Clique no botão</h2>
+              <p>confirmação até dia 19/09</p>
+            </div>
             <Dialog>
-              <DialogTrigger render={<button className="wedding-pill" type="button" />}>
-                Confirmar presença
+              <DialogTrigger
+                render={<button className="wedding-arch-button" type="button" />}
+              >
+                Confirme sua presença
               </DialogTrigger>
               <DialogContent className="max-h-[calc(100svh-2rem)] overflow-y-auto border-[#9aa07b]/50 bg-[#fbfaf5] p-6 sm:max-w-lg">
                 <DialogTitle className="font-serif text-3xl text-[#161616]">
@@ -100,111 +112,111 @@ export default async function Home() {
                 <RsvpForm variant="plain" />
               </DialogContent>
             </Dialog>
-            <a className="wedding-pill" href="#vestimenta">
+            <a className="wedding-arch-button" href="#vestimenta">
               Informações de vestimenta
             </a>
-            <a className="wedding-pill" href="#presentes">
+            <a className="wedding-arch-button" href="#presentes">
               Lista de presentes
             </a>
           </div>
         </section>
 
-        <section id="vestimenta" className="ornate-page dress-section px-4 md:px-5">
-          <div className="relative z-10 mx-auto flex min-h-[calc(100svh-6rem)] max-w-6xl flex-col items-center justify-center text-center md:min-h-[calc(100svh-10rem)]">
-            <h2 className="dress-title mb-3" aria-label="Dress code">
-              <span className="dress-title__script">Dress</span>
-              <span className="dress-title__serif">code</span>
-            </h2>
-            <p className="mb-3 font-serif text-xl md:mb-6 md:text-3xl">Social</p>
-            <p className="mb-5 max-w-3xl font-serif text-sm leading-snug sm:text-base md:mb-8 md:text-xl md:leading-relaxed">
-              Queremos que todos se sintam a vontade, lindos e especiais nesse dia tão
-              importante para nós.
-            </p>
-            <div className="dress-stage grid w-full grid-cols-[minmax(0,1.15fr)_auto_minmax(0,1.15fr)] items-end gap-1 sm:gap-4 md:gap-8">
-              <div className="dress-copy dress-copy--ele mb-2 space-y-1.5 pt-10 md:mb-5 md:space-y-4 md:pt-28">
-                <h3 className="script-heading">Eles</h3>
-                <p className="mx-auto max-w-[9.2rem] font-serif text-[0.68rem] leading-tight sm:max-w-xs sm:text-sm sm:leading-snug md:text-xl">
-                  Terno ou blazer com camisa social. Gravata é opcional, Também pode vir
-                  com trage tipico gaucho.
-                </p>
-              </div>
-              <div className="-mt-6 flex justify-center gap-0 self-start sm:-mt-8 sm:gap-2 md:-mt-14">
-                <div className="dress-person dress-person--ele">
-                  <Image
-                    src="/ele.png"
-                    alt="Traje masculino"
-                    width={220}
-                    height={420}
-                    className="h-36 w-auto object-contain sm:h-52 md:h-[26rem]"
-                  />
-                </div>
-                <div className="dress-person dress-person--ela">
-                  <Image
-                    src="/ela.png"
-                    alt="Traje feminino"
-                    width={220}
-                    height={420}
-                    className="h-36 w-auto object-contain sm:h-52 md:h-[26rem]"
-                  />
-                </div>
-              </div>
-              <div className="dress-copy dress-copy--ela mb-2 space-y-1.5 pt-10 md:mb-5 md:space-y-4 md:pt-28">
-                <h3 className="script-heading">Elas</h3>
-                <p className="mx-auto max-w-[9.2rem] font-serif text-[0.68rem] leading-tight sm:max-w-xs sm:text-sm sm:leading-snug md:text-xl">
-                  Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem
-                  vindas
-                </p>
-              </div>
+        <section id="contagem" className="wedding-countdown-section relative">
+          <div className="wedding-countdown-panel">
+            <div className="wedding-countdown-clock">
+              <CountdownTimer />
             </div>
+            <a className="wedding-countdown-button" href="#confirmacao">
+              Confirme sua presença
+            </a>
           </div>
         </section>
 
-        <section id="como-comprar" className="ornate-page px-5 py-16 md:py-24">
-          <div className="mx-auto flex min-h-[calc(100svh-12rem)] w-full max-w-5xl flex-col items-center justify-center gap-10 text-center">
-            <Image
-              src="/logo.png"
-              alt="Logo Gustavo e Ana"
-              width={220}
-              height={220}
-              className="mx-auto size-36 object-contain sm:size-40 md:size-52"
-            />
-            <div className="mx-auto max-w-4xl space-y-8 text-center">
-              <h2 className="gift-title" aria-label="Lista de presentes">
-                <span className="gift-title__script">lista</span>
-                <span className="gift-title__de">de</span>
-                <span className="gift-title__serif">presentes</span>
-              </h2>
-              <p className="font-serif text-md leading-relaxed md:text-xl">
-                Cada presente recebido fará parte da história que estamos começando a
-                construir. Por isso, optamos por receber as contribuições via Pix.
+        <section id="vestimenta" className="dress-envelope-section relative">
+          <Image src="/5.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="dress-envelope-copy">
+            <h2 className="dress-envelope-title" aria-label="Dress code">
+              <span className="dress-envelope-title__script">Dress</span>
+              <span className="dress-envelope-title__serif">code</span>
+            </h2>
+            <p className="dress-envelope-social">Social</p>
+            <p className="dress-envelope-text">
+              Queremos que todos se sintam a vontade, lindos e especiais nesse dia tão
+              importante para nós.
+            </p>
+          </div>
+        </section>
+
+        <section className="dress-guide-section relative" aria-label="Trajes sugeridos">
+          <Image src="/6.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="dress-guide">
+            <div className="dress-guide__column dress-guide__column--ele">
+              <Image
+                src="/ele.png"
+                alt="Traje masculino"
+                width={675}
+                height={1200}
+                className="dress-guide__person dress-guide__person--ele"
+              />
+              <h3 className="script-heading">Eles</h3>
+              <p>
+                Terno ou blazer com camisa social. Gravata é opcional, Também pode vir com
+                trage tipico gaucho.
+              </p>
+            </div>
+            <div className="dress-guide__column dress-guide__column--ela">
+              <Image
+                src="/ela.png"
+                alt="Traje feminino"
+                width={736}
+                height={1308}
+                className="dress-guide__person dress-guide__person--ela"
+              />
+              <h3 className="script-heading">Elas</h3>
+              <p>
+                Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem
+                vindas
               </p>
             </div>
           </div>
         </section>
 
-        <section className="ornate-page px-5 py-16 md:py-24">
-          <div className="mx-auto flex min-h-[calc(100svh-18rem)] w-full max-w-5xl flex-col items-center justify-center text-center">
-            <div className="mx-auto max-w-4xl space-y-8 text-center">
-              <h3 className="font-serif text-2xl font-semibold italic md:text-3xl">
-                Como efetuar a compra
-              </h3>
-              <ol className="mx-auto max-w-3xl list-decimal space-y-3 pl-8 text-left font-serif text-lg leading-relaxed md:text-xl">
-                <li>Escolha seu presente ou parte do valor do presente desejado</li>
-                <li>
-                  Clique em “comprar”, copie o código do Pix e realize o pagamento através
-                  do seu banco.
-                </li>
-                <li>
-                  Deixe uma mensagem de carinho para sabermos que foi o seu presente que
-                  recebemos.
-                </li>
-              </ol>
-            </div>
+        <section id="como-comprar" className="gift-intro-section relative">
+          <Image src="/7.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="gift-intro-copy">
+            <h2 className="gift-title" aria-label="Lista de presentes">
+              <span className="gift-title__script">lista</span>
+              <span className="gift-title__de">de</span>
+              <span className="gift-title__serif">presentes</span>
+            </h2>
+            <p>
+              Cada presente recebido fará parte da história que estamos começando a
+              construir. Por isso, optamos por receber as contribuições via Pix.
+            </p>
           </div>
         </section>
 
-        <section id="presentes" className="ornate-page px-3 py-16 sm:px-5 md:py-24">
-          <div className="mx-auto flex min-h-[calc(100svh-8rem)] w-full max-w-6xl flex-col items-center justify-center gap-10 text-center md:min-h-[calc(100svh-12rem)] md:gap-14">
+        <section className="purchase-guide-section relative">
+          <Image src="/8.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="purchase-guide-copy">
+            <h3>Como efetuar a compra</h3>
+            <ol>
+              <li>Escolha seu presente ou parte do valor do presente desejado</li>
+              <li>Clique em “comprar” e realize o pix atraves do seu banco.</li>
+              <li>
+                deixe uma mensagem de carinho para sabermos que foi o seu presente que
+                recebemos.
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section
+          id="presentes"
+          className="ornate-page relative px-3 py-16 sm:px-5 md:py-24"
+        >
+          <Image src="/9.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="relative z-10 mx-auto flex min-h-[calc(100svh-8rem)] w-full max-w-6xl flex-col items-center justify-center gap-10 text-center md:min-h-[calc(100svh-12rem)] md:gap-14">
             <div className="mx-auto max-w-4xl space-y-4 text-center">
               <h2 className="font-serif text-[clamp(2.25rem,6vw,4.6rem)] leading-none">
                 Presentes
