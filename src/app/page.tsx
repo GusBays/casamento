@@ -107,7 +107,7 @@ export default async function Home() {
                   Confirme sua presença
                 </DialogTitle>
                 <DialogDescription className="font-serif text-base leading-relaxed text-[#5e604f]">
-                  Conta pra gente seu nome e quem vai junto.
+                  Digite seu nome e os demais do convite.
                 </DialogDescription>
                 <RsvpForm variant="plain" />
               </DialogContent>

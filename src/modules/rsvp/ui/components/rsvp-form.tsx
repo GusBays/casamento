@@ -33,73 +33,73 @@ export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
   }, [state.message, state.status])
 
   const form = (
-        <form action={formAction} className="space-y-5">
-          <div className="space-y-2">
-            <Label htmlFor="guestName">Seu nome</Label>
-            <div className="relative">
-              <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                id="guestName"
-                name="guestName"
-                placeholder="Nome e sobrenome"
-                defaultValue={state.fields?.guestName}
-                autoComplete="name"
-                className="pl-10"
-                required
-              />
-            </div>
-          </div>
+    <form action={formAction} className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="guestName">Seu nome</Label>
+        <div className="relative">
+          <UserRound className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            id="guestName"
+            name="guestName"
+            placeholder="Nome e sobrenome"
+            defaultValue={state.fields?.guestName}
+            autoComplete="name"
+            className="pl-10"
+            required
+          />
+        </div>
+      </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="guestEmail">Email</Label>
-            <div className="relative">
-              <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                id="guestEmail"
-                name="guestEmail"
-                type="email"
-                placeholder="voce@email.com"
-                defaultValue={state.fields?.guestEmail}
-                autoComplete="email"
-                className="pl-10"
-                required
-              />
-            </div>
-          </div>
+      <div className="space-y-2">
+        <Label htmlFor="guestEmail">Email</Label>
+        <div className="relative">
+          <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            id="guestEmail"
+            name="guestEmail"
+            type="email"
+            placeholder="voce@email.com"
+            defaultValue={state.fields?.guestEmail}
+            autoComplete="email"
+            className="pl-10"
+            required
+          />
+        </div>
+      </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="companions">Quem vai junto?</Label>
-            <Input
-              id="companions"
-              name="companions"
-              placeholder="Ex: Ana, Pedro e Joao"
-              defaultValue={state.fields?.companions}
-            />
-            <p className="text-sm leading-6 text-muted-foreground">
-              Se for sozinho, pode deixar em branco.
-            </p>
-          </div>
+      <div className="space-y-2">
+        <Label htmlFor="companions">Nomes do convite</Label>
+        <Input
+          id="companions"
+          name="companions"
+          placeholder="Ex: Cônjuge e filhos"
+          defaultValue={state.fields?.companions}
+        />
+        <p className="text-sm leading-6 text-muted-foreground">
+          Se for apenas você, pode deixar em branco.
+        </p>
+      </div>
 
-          {state.status === 'error' ? (
-            <Alert variant="destructive">
-              <AlertTitle>Nao foi possivel confirmar</AlertTitle>
-              <AlertDescription>{state.message}</AlertDescription>
-            </Alert>
-          ) : null}
+      {state.status === 'error' ? (
+        <Alert variant="destructive">
+          <AlertTitle>Não foi possivel confirmar</AlertTitle>
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
+      ) : null}
 
-          {state.status === 'success' ? (
-            <Alert>
-              <Check className="size-4" aria-hidden />
-              <AlertTitle>Presenca confirmada</AlertTitle>
-              <AlertDescription>{state.message}</AlertDescription>
-            </Alert>
-          ) : null}
+      {state.status === 'success' ? (
+        <Alert>
+          <Check className="size-4" aria-hidden />
+          <AlertTitle>Presenca confirmada</AlertTitle>
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
+      ) : null}
 
-          <Button className="w-full sm:w-auto" size="lg" type="submit" disabled={isPending}>
-            <Send className="size-4" aria-hidden />
-            {isPending ? 'Confirmando...' : 'Confirmar'}
-          </Button>
-        </form>
+      <Button className="w-full sm:w-auto" size="lg" type="submit" disabled={isPending}>
+        <Send className="size-4" aria-hidden />
+        {isPending ? 'Confirmando...' : 'Confirmar'}
+      </Button>
+    </form>
   )
 
   if (variant === 'plain') return form
@@ -109,9 +109,7 @@ export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
       <CardHeader>
         <CardTitle>Confirmar presenca</CardTitle>
       </CardHeader>
-      <CardContent>
-        {form}
-      </CardContent>
+      <CardContent>{form}</CardContent>
     </Card>
   )
 }
