@@ -1,7 +1,7 @@
 'use client'
 
-import { useTransition } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTransition } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -71,7 +71,11 @@ export function AdminGiftForm({ gift }: AdminGiftFormProps) {
 
       <div className="grid gap-2">
         <Label htmlFor="name">Nome</Label>
-        <Input id="name" aria-invalid={!!form.formState.errors.name} {...form.register('name')} />
+        <Input
+          id="name"
+          aria-invalid={!!form.formState.errors.name}
+          {...form.register('name')}
+        />
         {form.formState.errors.name ? (
           <p className="text-xs text-destructive">{form.formState.errors.name.message}</p>
         ) : null}
@@ -89,7 +93,9 @@ export function AdminGiftForm({ gift }: AdminGiftFormProps) {
             {...form.register('price')}
           />
           {form.formState.errors.price ? (
-            <p className="text-xs text-destructive">{form.formState.errors.price.message}</p>
+            <p className="text-xs text-destructive">
+              {form.formState.errors.price.message}
+            </p>
           ) : null}
         </div>
         <div className="grid gap-2">
@@ -99,10 +105,12 @@ export function AdminGiftForm({ gift }: AdminGiftFormProps) {
             type="number"
             min="1"
             aria-invalid={!!form.formState.errors.quotes}
-            {...form.register('quotes')}
+            {...form.register('quotes', { valueAsNumber: true })}
           />
           {form.formState.errors.quotes ? (
-            <p className="text-xs text-destructive">{form.formState.errors.quotes.message}</p>
+            <p className="text-xs text-destructive">
+              {form.formState.errors.quotes.message}
+            </p>
           ) : null}
         </div>
         <div className="grid gap-2">
@@ -112,17 +120,24 @@ export function AdminGiftForm({ gift }: AdminGiftFormProps) {
             type="number"
             min="0"
             aria-invalid={!!form.formState.errors.remaining}
-            {...form.register('remaining')}
+            {...form.register('remaining', { valueAsNumber: true })}
           />
           {form.formState.errors.remaining ? (
-            <p className="text-xs text-destructive">{form.formState.errors.remaining.message}</p>
+            <p className="text-xs text-destructive">
+              {form.formState.errors.remaining.message}
+            </p>
           ) : null}
         </div>
       </div>
 
       <div className="grid gap-2">
         <Label htmlFor="image">Imagem</Label>
-        <Input id="image" type="url" placeholder="https://..." {...form.register('image')} />
+        <Input
+          id="image"
+          type="url"
+          placeholder="https://..."
+          {...form.register('image')}
+        />
         <div className="overflow-hidden rounded-lg border bg-muted/40">
           {imagePreview ? (
             <div
