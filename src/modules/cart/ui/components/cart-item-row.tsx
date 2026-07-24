@@ -69,7 +69,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
       <div className="grid grid-cols-[4rem_1fr_auto] gap-3 py-5">
         <div className="relative grid size-16 place-items-center overflow-hidden rounded-md bg-[#eef0e3] text-[#3f4d2f]">
           {item.image ? (
-            <Image alt={item.name} className="object-cover" fill sizes="4rem" src={item.image} />
+            <Image alt={item.name} className="object-cover" fill sizes="4rem" src={item.image} unoptimized />
           ) : (
             <Gift className="size-5" aria-hidden />
           )}

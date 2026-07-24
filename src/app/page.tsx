@@ -66,8 +66,8 @@ export default async function Home() {
                   <Church strokeWidth={1.25} />
                 </div>
                 <div className="wedding-info__copy">
-                  <p className="wedding-info__label">CERIMONIA:</p>
-                  <h2>PAROQUIA SANTA CATARIA</h2>
+                  <p className="wedding-info__label">CERIMÔNIA:</p>
+                  <h2>PARÓQUIA SANTA CATARINA</h2>
                   <AddressDialog
                     address="Rua Graciliano Ramos, 230, São Leopoldo"
                     label="Rua Graciliano Ramos, 230, São Leopoldo"
@@ -190,8 +190,9 @@ export default async function Home() {
               <span className="gift-title__serif">presentes</span>
             </h2>
             <p>
-              Cada presente recebido fará parte da história que estamos começando a
-              construir. Por isso, optamos por receber as contribuições via Pix.
+              Vamos nos mudar! Cada presente recebido fará parte da história que estamos
+              começando a construir. Por isso, optamos por receber as contribuições via
+              Pix.
             </p>
           </div>
         </section>

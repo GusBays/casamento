@@ -32,6 +32,7 @@ export function OrderItemsSummary({ items }: OrderItemsSummaryProps) {
                 fill
                 sizes="4rem"
                 src={item.image}
+                unoptimized
               />
             ) : (
               <Gift className="size-5" aria-hidden />

@@ -385,17 +385,13 @@
     }
 
     .dress-guide__column--ele {
-      padding-top: 2.35rem;
+      padding-top: 0;
     }
 
-    .dress-guide__person--ele {
-      height: 8.8rem;
-      margin-bottom: 1.3rem;
-    }
-
+    .dress-guide__person--ele,
     .dress-guide__person--ela {
-      height: 11.5rem;
-      margin-bottom: 0.45rem;
+      height: 9.8rem;
+      margin-bottom: 0.85rem;
     }
 
     .dress-guide h3 {

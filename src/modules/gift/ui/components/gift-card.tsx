@@ -43,6 +43,7 @@ export function GiftCard({ gift }: GiftCardProps) {
               fill
               sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 22rem"
               src={gift.image}
+              unoptimized
             />
           </div>
         ) : (
