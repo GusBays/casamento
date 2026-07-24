@@ -54,7 +54,7 @@ export function GiftCard({ gift }: GiftCardProps) {
       </div>
       <CardHeader className="gap-2 sm:gap-3">
         <div className="space-y-1.5 sm:space-y-2">
-          <CardTitle className={cn("line-clamp-2 min-h-8 font-serif text-[0.86rem] leading-tight sm:min-h-10 sm:text-base md:text-xl", purchased && "line-through decoration-[#3f4d2f]/70 decoration-2")}>
+          <CardTitle className={cn("font-serif text-[0.78rem] leading-tight break-words hyphens-auto sm:text-base md:text-xl", purchased && "line-through decoration-[#3f4d2f]/70 decoration-2")}>
             {gift.name}
           </CardTitle>
           <Badge className={cn("h-4 px-1.5 text-[0.58rem] sm:h-5 sm:px-2 sm:text-xs", disabled ? "" : "bg-[#3f4d2f] text-[#fbfaf5]")} variant={disabled ? "secondary" : "default"}>
