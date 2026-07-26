@@ -6,7 +6,7 @@ export const rsvpSchema = z.object({
   companions: z
     .string()
     .trim()
-    .max(500, 'Use ate 500 caracteres.')
+    .max(500, 'Use até 500 caracteres.')
     .optional()
     .transform((value) => value || null)
 })

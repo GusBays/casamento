@@ -61,6 +61,6 @@ export async function confirmRsvp(
 
   return {
     status: 'success',
-    message: 'Presenca confirmada. Obrigado por avisar a gente!'
+    message: 'Presença confirmada. Obrigado por avisar a gente!'
   }
 }

@@ -141,7 +141,7 @@ export default async function Home() {
             </h2>
             <p className="dress-envelope-social">Social</p>
             <p className="dress-envelope-text">
-              Queremos que todos se sintam a vontade, lindos e especiais nesse dia tão
+              Queremos que todos se sintam à vontade, lindos e especiais nesse dia tão
               importante para nós.
             </p>
           </div>
@@ -160,8 +160,8 @@ export default async function Home() {
               />
               <h3 className="script-heading">Eles</h3>
               <p>
-                Terno ou blazer com camisa social. Gravata é opcional, Também pode vir com
-                trage tipico gaucho.
+                Terno ou blazer com camisa social. Gravata é opcional. Também pode vir com
+                traje típico gaúcho.
               </p>
             </div>
             <div className="dress-guide__column dress-guide__column--ela">
@@ -174,8 +174,7 @@ export default async function Home() {
               />
               <h3 className="script-heading">Elas</h3>
               <p>
-                Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem
-                vindas
+                Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem-vindas.
               </p>
             </div>
           </div>
@@ -203,9 +202,9 @@ export default async function Home() {
             <h3>Como efetuar a compra</h3>
             <ol>
               <li>Escolha seu presente ou parte do valor do presente desejado</li>
-              <li>Clique em “comprar” e realize o pix atraves do seu banco.</li>
+              <li>Clique em “comprar” e realize o Pix através do seu banco.</li>
               <li>
-                deixe uma mensagem de carinho para sabermos que foi o seu presente que
+                Deixe uma mensagem de carinho para sabermos que foi o seu presente que
                 recebemos.
               </li>
             </ol>

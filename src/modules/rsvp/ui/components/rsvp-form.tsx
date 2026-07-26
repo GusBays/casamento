@@ -82,7 +82,7 @@ export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
 
       {state.status === 'error' ? (
         <Alert variant="destructive">
-          <AlertTitle>Não foi possivel confirmar</AlertTitle>
+          <AlertTitle>Não foi possível confirmar</AlertTitle>
           <AlertDescription>{state.message}</AlertDescription>
         </Alert>
       ) : null}
@@ -90,7 +90,7 @@ export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
       {state.status === 'success' ? (
         <Alert>
           <Check className="size-4" aria-hidden />
-          <AlertTitle>Presenca confirmada</AlertTitle>
+          <AlertTitle>Presença confirmada</AlertTitle>
           <AlertDescription>{state.message}</AlertDescription>
         </Alert>
       ) : null}
@@ -107,7 +107,7 @@ export function RsvpForm({ variant = 'card' }: RsvpFormProps) {
   return (
     <Card className="rounded-lg shadow-sm">
       <CardHeader>
-        <CardTitle>Confirmar presenca</CardTitle>
+        <CardTitle>Confirmar presença</CardTitle>
       </CardHeader>
       <CardContent>{form}</CardContent>
     </Card>
