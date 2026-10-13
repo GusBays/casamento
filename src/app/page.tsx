@@ -53,8 +53,8 @@ export default async function Home() {
                 <div>
                   <h2>BLEST EVENTOS</h2>
                   <AddressDialog
-                    address="Rua Cedro, 39, Sapucaia do Sul"
-                    label="Rua Cedro, 39, Sapucaia do Sul"
+                    address="Rua Doná Ecilda, 39 - Freitas, Sapucaia do Sul"
+                    label="Rua Doná Ecilda, 39 - Freitas, Sapucaia do Sul - RS, 93218-110"
                   />
                 </div>
               </div>
@@ -174,7 +174,8 @@ export default async function Home() {
               />
               <h3 className="script-heading">Elas</h3>
               <p>
-                Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são bem-vindas.
+                Vestidos midi ou longos, macacões ou conjuntos. Cores e estampas são
+                bem-vindas.
               </p>
             </div>
           </div>
